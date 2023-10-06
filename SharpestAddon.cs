@@ -8,7 +8,6 @@ namespace rosthouse.sharpest.addons
 
   [Tool]
   public partial class SharpestAddon : EditorPlugin
-  {
 
     public override void _EnterTree()
     {
