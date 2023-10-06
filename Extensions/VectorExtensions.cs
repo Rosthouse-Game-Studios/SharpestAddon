@@ -36,20 +36,22 @@ public static class VectorExtensions
     return new Vector2I(Mathf.RoundToInt(v.X), Mathf.RoundToInt(v.Y));
   }
 
-  public static Vector3I RoundToInt(this Vector3 v){
-	return new Vector3I(
-		Mathf.RoundToInt(v.X),
-		Mathf.RoundToInt(v.Y),
-		Mathf.RoundToInt(v.Z)
-	);
+  public static Vector3I RoundToInt(this Vector3 v)
+  {
+    return new Vector3I(
+      Mathf.RoundToInt(v.X),
+      Mathf.RoundToInt(v.Y),
+      Mathf.RoundToInt(v.Z)
+    );
   }
 
-  public static Vector4I RoundToInt(this Vector4 v){
-	return new Vector4I(
-		Mathf.RoundToInt(v.X),
-		Mathf.RoundToInt(v.Y),
-		Mathf.RoundToInt(v.Z),
-		Mathf.RoundToInt(v.W)
-	);
+  public static Vector4I RoundToInt(this Vector4 v)
+  {
+    return new Vector4I(
+      Mathf.RoundToInt(v.X),
+      Mathf.RoundToInt(v.Y),
+      Mathf.RoundToInt(v.Z),
+      Mathf.RoundToInt(v.W)
+    );
   }
 }
