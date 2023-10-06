@@ -30,4 +30,5 @@ namespace rosthouse.sharpest.addons
   }
 
 }
+
 #endif
