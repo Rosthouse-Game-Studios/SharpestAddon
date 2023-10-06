@@ -166,7 +166,7 @@ namespace rosthouse.sharpest.addon
       if (@event.IsActionReleased("ui_left_click"))
       {
         GD.Print($"Released {normal}");
-        this.rotateDirectionx = Vector3.Inf;
+        this.rotateDirection = Vector3.Inf;
       }
     }
 
