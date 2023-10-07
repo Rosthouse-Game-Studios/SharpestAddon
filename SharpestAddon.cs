@@ -21,6 +21,7 @@ namespace rosthouse.sharpest.addon
       this.AddAutoloadSingleton("Draw3D", "res://addons/SharpestAddon/Autoloads/Draw3D.cs");
       this.AddAutoloadSingleton("WindowManager", "res://addons/SharpestAddon/Autoloads/WindowManager.cs");
       this.AddAutoloadSingleton("DebugOverLay", "Autoloads/DebugOverlay/debug_overlay.tscn");
+      this.AddAutoloadSingleton("Draw2D", "Autoloads/DebugDraw/Draw2D.cs");
     }
 
     public override void _ExitTree()
@@ -29,6 +30,7 @@ namespace rosthouse.sharpest.addon
       this.RemoveAutoloadSingleton("Draw3D");
       this.RemoveAutoloadSingleton("WindowManager");
       this.RemoveAutoloadSingleton("DebugOverlay");
+      this.RemoveAutoloadSingleton("Draw2D");
 
       this.RemoveCustomType("Quit");
       this.RemoveCustomType("Draw3D");
