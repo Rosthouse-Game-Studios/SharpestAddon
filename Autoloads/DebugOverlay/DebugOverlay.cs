@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using Godot.Collections;
 
@@ -56,6 +57,10 @@ namespace rosthouse.sharpest.addon
       base._Notification(what);
     }
 
+    public void AddStat(string statName, Func<Variant> a){
+      this.AddStat(statName, Callable.From(a));
+    }
+
     public void AddStat(string statName, Callable c)
     {
       this.values[statName] = c;
@@ -64,6 +69,10 @@ namespace rosthouse.sharpest.addon
     public void RemoveStat(string statName)
     {
       this.values.Remove(statName);
+    }
+
+    public void SetOffset(Vector2 offset){
+      this.Offset = offset;
     }
   }
 
