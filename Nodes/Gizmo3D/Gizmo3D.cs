@@ -37,7 +37,6 @@ namespace rosthouse.sharpest.addon
 
     private Node3D translate;
     private Node3D rotate;
-    private Control controls;
     private Node3D visuals;
 
 
@@ -50,7 +49,6 @@ namespace rosthouse.sharpest.addon
       this.translate = GetNode<Node3D>("Translate");
       this.rotate = GetNode<Node3D>("Rotate");
 
-      this.controls = GetNode<Control>("%Controls");
       this.VisibilityChanged += () => this.Rotation = Vector3.Zero;
     }
 
