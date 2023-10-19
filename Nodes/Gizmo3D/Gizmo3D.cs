@@ -9,14 +9,19 @@ namespace rosthouse.sharpest.addon
   public partial class Gizmo3D : Node3D
   {
     public static uint MASK = 32;
-    public static Gizmo3D Create(Node owner = null,
+    public static Gizmo3D Create(Node parent, Node owner = null,
      Gizmo3D.TransformFlags translation = TransformFlags.X | TransformFlags.Y | TransformFlags.Z,
      Gizmo3D.TransformFlags rotation = TransformFlags.X | TransformFlags.Y | TransformFlags.Z)
     {
       var g = GD.Load<PackedScene>("res://addons/SharpestAddon/Nodes/Gizmo3D/gizmo_3d.tscn").Instantiate<Gizmo3D>();
+      parent.AddChild(g);
       if (owner != null)
       {
         g.Owner = owner;
+      }
+      else
+      {
+        g.Owner = parent.Owner;
       }
       g.TranslationFlags = translation;
       g.rotationFlags = rotation;
@@ -40,7 +45,6 @@ namespace rosthouse.sharpest.addon
 
     private Node3D translate;
     private Node3D rotate;
-    private Node3D visuals;
 
     [Flags]
     public enum TransformFlags
@@ -84,8 +88,6 @@ namespace rosthouse.sharpest.addon
     public override void _Ready()
     {
       base._Ready();
-
-      this.visuals = GetNode<Node3D>("Visuals");
 
       this.translate = GetNode<Node3D>("Translate");
       this.rotate = GetNode<Node3D>("Rotate");
