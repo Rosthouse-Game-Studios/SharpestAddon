@@ -9,13 +9,17 @@ namespace rosthouse.sharpest.addon
   public partial class Gizmo3D : Node3D
   {
     public static uint MASK = 32;
-    public static Gizmo3D Create(Node owner = null)
+    public static Gizmo3D Create(Node owner = null,
+     Gizmo3D.TransformFlags translation = TransformFlags.X | TransformFlags.Y | TransformFlags.Z,
+     Gizmo3D.TransformFlags rotation = TransformFlags.X | TransformFlags.Y | TransformFlags.Z)
     {
       var g = GD.Load<PackedScene>("res://addons/SharpestAddon/Nodes/Gizmo3D/gizmo_3d.tscn").Instantiate<Gizmo3D>();
       if (owner != null)
       {
         g.Owner = owner;
       }
+      g.TranslationFlags = translation;
+      g.rotationFlags = rotation;
       return g;
     }
 
@@ -29,7 +33,6 @@ namespace rosthouse.sharpest.addon
     [Signal] public delegate void RotatedEventHandler(Vector3 axis, float angle);
     [Export] public float Scaling { get; private set; } = 1f;
     [Export] public float TranslateSpeed { get; set; } = 0.01f;
-    [Export] public NodePath Remote { get => GetNode<RemoteTransform3D>("%RemoteTransform").RemotePath; set => GetNode<RemoteTransform3D>("%RemoteTransform").RemotePath = value; }
     private Vector3 currentNormal;
     Vector2 dragStartPosition = new(0, 0);
     private Handle currentHandle;
@@ -38,6 +41,44 @@ namespace rosthouse.sharpest.addon
     private Node3D translate;
     private Node3D rotate;
     private Node3D visuals;
+
+    [Flags]
+    public enum TransformFlags
+    {
+      X = 1 << 1,
+      Y = 1 << 2,
+      Z = 1 << 3,
+    }
+    TransformFlags translationFlags;
+    [Export]
+    TransformFlags TranslationFlags
+    {
+      get => this.translationFlags; set
+      {
+        this.translationFlags = value;
+        if (!Engine.IsEditorHint())
+        {
+          SetAxisActive(TranslationFlags, TransformFlags.X, "%XAxis");
+          SetAxisActive(TranslationFlags, TransformFlags.Y, "%YAxis");
+          SetAxisActive(TranslationFlags, TransformFlags.Z, "%ZAxis");
+        }
+      }
+    }
+    TransformFlags rotationFlags;
+    [Export]
+    TransformFlags RotationFlags
+    {
+      get => this.rotationFlags; set
+      {
+        this.rotationFlags = value;
+        if (!Engine.IsEditorHint())
+        {
+          SetAxisActive(RotationFlags, TransformFlags.X, "%XPlane");
+          SetAxisActive(RotationFlags, TransformFlags.Y, "%YPlane");
+          SetAxisActive(RotationFlags, TransformFlags.Z, "%ZPlane");
+        }
+      }
+    }
 
 
     public override void _Ready()
@@ -50,8 +91,25 @@ namespace rosthouse.sharpest.addon
       this.rotate = GetNode<Node3D>("Rotate");
 
       this.VisibilityChanged += () => this.Rotation = Vector3.Zero;
+
+      SetAxisActive(TranslationFlags, TransformFlags.X, "%XAxis");
+      SetAxisActive(TranslationFlags, TransformFlags.Y, "%YAxis");
+      SetAxisActive(TranslationFlags, TransformFlags.Z, "%ZAxis");
+
+
+      SetAxisActive(RotationFlags, TransformFlags.X, "%XPlane");
+      SetAxisActive(RotationFlags, TransformFlags.Y, "%YPlane");
+      SetAxisActive(RotationFlags, TransformFlags.Z, "%ZPlane");
     }
 
+    private void SetAxisActive(TransformFlags flags, TransformFlags check, string nodePath)
+    {
+      if ((flags & check) != check)
+      {
+        GetNode<Node3D>(nodePath).ProcessMode = ProcessModeEnum.Disabled;
+        GetNode<MeshInstance3D>($"{nodePath}/Mesh").Visible = false;
+      }
+    }
 
     public override void _Input(InputEvent @event)
     {

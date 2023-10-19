@@ -21,7 +21,8 @@ inner_radius = 0.875
 [node name="Gizmo3D" type="Node3D"]
 script = ExtResource("1_uicbw")
 Scaling = 0.15
-TranslateSpeed = null
+TranslationFlags = 14
+RotationFlags = 14
 
 [node name="Translate" type="Node3D" parent="."]
 
