@@ -24,7 +24,7 @@ namespace rosthouse.sharpest.addon
         g.Owner = parent.Owner;
       }
       g.TranslationFlags = translation;
-      g.rotationFlags = rotation;
+      g.RotationFlags = rotation;
       return g;
     }
 
@@ -53,7 +53,7 @@ namespace rosthouse.sharpest.addon
       Y = 1 << 2,
       Z = 1 << 3,
     }
-    TransformFlags translationFlags;
+    private TransformFlags translationFlags;
     [Export]
     TransformFlags TranslationFlags
     {
@@ -68,7 +68,7 @@ namespace rosthouse.sharpest.addon
         }
       }
     }
-    TransformFlags rotationFlags;
+    private TransformFlags rotationFlags;
     [Export]
     TransformFlags RotationFlags
     {
