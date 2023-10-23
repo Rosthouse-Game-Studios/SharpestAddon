@@ -27,15 +27,33 @@ namespace rosthouse.sharpest.addon
       this.OpenWindow(n, GetViewport().GetVisibleRect().Size / 2);
     }
 
-    public void OpenWindow(Control windowContent, Vector2 position, string title = "")
+    public void OpenWindow(Control windowContent, Vector2 position, string title = "", bool useNativeWindow = true)
     {
-      var lw = GD.Load<PackedScene>("res://addons/SharpestAddon/Nodes/light_window.tscn").Instantiate<LightWindow>();
-      this.AddChild(lw);
-      lw.SetContent(windowContent, true);
-      lw.SetTitle(title);
-      lw.Passthrough = true;
-      lw.RespectContentMinSize = true;
-      lw.Position = position;
+
+      Node w;
+      if (useNativeWindow)
+      {
+        var nw = new Window();
+        nw.AddChild(windowContent);
+        nw.Position = position.RountToInt();
+        nw.WrapControls = true;
+        nw.ContentScaleAspect = Window.ContentScaleAspectEnum.Expand;
+        nw.ContentScaleMode = Window.ContentScaleModeEnum.CanvasItems;
+        w = nw;
+        nw.CloseRequested += () => nw.QueueFree();
+      }
+      else
+      {
+        var lw = GD.Load<PackedScene>("res://addons/SharpestAddon/Nodes/light_window.tscn").Instantiate<LightWindow>();
+        lw.SetContent(windowContent, true);
+        lw.SetTitle(title);
+        lw.Passthrough = true;
+        lw.RespectContentMinSize = true;
+        lw.Position = position;
+        w = lw;
+      }
+      windowContent.TreeExiting += () => w.QueueFree();
+      this.AddChild(w);
     }
 
     public void OpenWindow(Control windowContent, Vector3 position)
