@@ -89,5 +89,23 @@ namespace rosthouse.sharpest.addon
       }
       return children;
     }
+
+    /// <summary>
+    /// Returns any child of the <see cref="Node" /> that is of type T. This is not guaranteed to be the first child.
+    /// </summary>
+    /// <param name="n">The Node to request a child from.</param>
+    /// <typeparam name="T">Any class inheriting from Node.</typeparam>
+    /// <returns>An instance of <see cref="T" />, or null</returns>
+    public static T GetAnyChildOrNull<T>(this Node n) where T : Node
+    {
+      foreach (var c in n.GetChildren())
+      {
+        if (c is T t)
+        {
+          return t;
+        }
+      }
+      return null;
+    }
   }
 }
