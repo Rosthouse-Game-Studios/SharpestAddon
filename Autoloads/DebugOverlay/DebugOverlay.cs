@@ -70,8 +70,4 @@ public partial class DebugOverlay : CanvasLayer
   {
     this.values.Remove(statName);
   }
-
-  public void SetOffset(Vector2 offset){
-    this.Offset = offset;
-  }
 }

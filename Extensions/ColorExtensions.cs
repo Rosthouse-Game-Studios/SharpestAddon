@@ -2,7 +2,6 @@ using Godot;
 
 namespace rosthouse.sharpest.addon;
 
-
 public static class ColorExtensions
 {
 
