@@ -1,10 +1,9 @@
 
 
 using System;
-using System.Collections;
 
-namespace rosthouse.sharpest.addon
-{
+namespace rosthouse.sharpest.addon;
+
 	public static class MathUtils
 	{
 		public static bool Between<T>(T min, T max, T t) where T : IComparable
@@ -12,4 +11,3 @@ namespace rosthouse.sharpest.addon
 			return t.CompareTo(min) >= 0 && t.CompareTo(max) < 0;
 		}
 	}
-}

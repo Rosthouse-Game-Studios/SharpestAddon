@@ -1,10 +1,7 @@
-
-
 using Godot;
 
+namespace rosthouse.sharpest.addon;
 
-namespace rosthouse.sharpest.addon
-{
 	public static class RectExtensions
 	{
 		public static Vector2 RandomPointInside(this Rect2 rect)
@@ -15,4 +12,3 @@ namespace rosthouse.sharpest.addon
 			);
 		}
 	}
-}
