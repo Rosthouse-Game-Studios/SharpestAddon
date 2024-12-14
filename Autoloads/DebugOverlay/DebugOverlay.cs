@@ -7,7 +7,7 @@ namespace rosthouse.sharpest.addon;
 
 public partial class DebugOverlay : CanvasLayer
 {
-  private static DebugOverlay instance;
+  private static DebugOverlay instance = null!;
 
   public static DebugOverlay Instance
   {
@@ -23,7 +23,7 @@ public partial class DebugOverlay : CanvasLayer
 
 
   private Dictionary<string, Callable> values = new Dictionary<string, Callable>();
-  private Label label;
+  private Label label = null!;
 
   public override void _Ready()
   {

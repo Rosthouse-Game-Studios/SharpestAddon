@@ -21,7 +21,7 @@ public partial class ExtendedRemoteTransform3D : Node3D
   [Export] private TransformFlags updateRotation;
   [Export] private TransformFlags updateScale;
 
-  [Export] private Node3D remoteTransform;
+  [Export] private Node3D remoteTransform = null!;
   [Export] private bool useGlobalTransform;
 
   // Called every frame. 'delta' is the elapsed time since the previous frame.

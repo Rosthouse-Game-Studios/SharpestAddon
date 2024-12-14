@@ -8,7 +8,7 @@ public partial class LightWindow : Control
   private bool resize;
   private bool drag;
   private Vector2 offset;
-  private Control contentContainer;
+  private Control contentContainer = null!;
   [Export] public bool Passthrough { get; set; } = false;
   [Export] public bool RespectContentMinSize { get; set; } = false;
   // Called when the node enters the scene tree for the first time.

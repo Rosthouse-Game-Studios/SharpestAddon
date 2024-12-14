@@ -30,7 +30,7 @@ public static class NodeExtensions
     return false;
   }
 
-  public static T GetChildByType<[MustBeVariant] T>(this Node n, bool includeInternal = false) where T : Node
+  public static T? GetChildByType<[MustBeVariant] T>(this Node n, bool includeInternal = false) where T : Node
   {
     foreach (var c in n.GetChildren(includeInternal))
     {
@@ -54,7 +54,7 @@ public static class NodeExtensions
     return children;
   }
 
-  public static T GetChildRecursive<[MustBeVariant] T>(this Node n, bool includeInternal = false) where T : Node
+  public static T? GetChildRecursive<[MustBeVariant] T>(this Node n, bool includeInternal = false) where T : Node
   {
     var children = new Godot.Collections.Array<Node>();
     foreach (var c in n.GetChildren(includeInternal))
@@ -93,7 +93,7 @@ public static class NodeExtensions
   /// <param name="n">The Node to request a child from.</param>
   /// <typeparam name="T">Any class inheriting from Node.</typeparam>
   /// <returns>An instance of <see cref="T" />, or null</returns>
-  public static T GetAnyChildOrNull<T>(this Node n) where T : Node
+  public static T? GetAnyChildOrNull<T>(this Node n) where T : Node
   {
     foreach (var c in n.GetChildren())
     {

@@ -9,20 +9,13 @@ namespace rosthouse.sharpest.addon;
 public partial class Gizmo3D : Node3D
 {
   public static uint MASK = 32;
-  public static Gizmo3D Create(Node parent, Node owner = null,
+  public static Gizmo3D Create(Node parent, Node? owner = null,
    Gizmo3D.TransformFlags translation = TransformFlags.X | TransformFlags.Y | TransformFlags.Z,
    Gizmo3D.TransformFlags rotation = TransformFlags.X | TransformFlags.Y | TransformFlags.Z)
   {
     var g = GD.Load<PackedScene>("res://addons/SharpestAddon/Nodes/Gizmo3D/gizmo_3d.tscn").Instantiate<Gizmo3D>();
     parent.AddChild(g);
-    if (owner != null)
-    {
-      g.Owner = owner;
-    }
-    else
-    {
-      g.Owner = parent.Owner;
-    }
+    g.Owner = owner ?? parent.Owner;
     g.TranslationFlags = translation;
     g.RotationFlags = rotation;
     return g;
@@ -40,11 +33,11 @@ public partial class Gizmo3D : Node3D
   [Export] public float TranslateSpeed { get; set; } = 0.01f;
   private Vector3 currentNormal;
   Vector2 dragStartPosition = new(0, 0);
-  private Handle currentHandle;
+  private Handle? currentHandle;
 
 
-  private Node3D translate;
-  private Node3D rotate;
+  private Node3D translate = null!;
+  private Node3D rotate = null!;
 
   [Flags]
   public enum TransformFlags

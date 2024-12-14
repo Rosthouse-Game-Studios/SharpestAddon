@@ -5,7 +5,7 @@ namespace rosthouse.sharpest.addon;
 public partial class WindowManager : Node
 {
 
-  private static WindowManager _instance;
+  private static WindowManager _instance = null!;
   public static WindowManager Instance => _instance;
 
 

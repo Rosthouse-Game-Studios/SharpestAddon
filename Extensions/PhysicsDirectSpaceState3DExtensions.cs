@@ -1,4 +1,8 @@
+using System;
+using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 using Godot;
+using Godot.Collections;
 
 namespace rosthouse.sharpest.addon;
 
@@ -27,7 +31,12 @@ public static class PhysicsDirectSpaceState3DExtensions
 
     public CollisionObject3D GetCollisionObject3D()
     {
-      return this.collider.AsGodotObject() as CollisionObject3D;
+      if (collider.AsGodotObject() is CollisionObject3D co)
+      {
+        return co;
+      }
+
+      throw new ArgumentException($"Received unexpected object: {collider.GetType()}");
     }
   }
   public static PhysicsRayQueryResult3D? IntersectRayResult(this PhysicsDirectSpaceState3D dss, PhysicsRayQueryParameters3D parameters)
@@ -56,7 +65,7 @@ public static class PhysicsDirectSpaceState3DExtensions
   /// <param name="rayLength">Given in meters, how far the ray should extend.</param>
   /// <param name="collideWithAreas">Areas are only hit, if this parameter is set to true.</param>
   /// <returns>A <see href="Nullable" /> containing either null or a <see href="PhysicsRayQueryResult3D" />.</returns>
-  public static PhysicsRayQueryResult3D? CastRayFromCamera(this PhysicsDirectSpaceState3D dss, uint collisionMask = uint.MaxValue, Godot.Collections.Array<Rid> exclude = null, float rayLength = 1000, bool collideWithAreas = false)
+  public static PhysicsRayQueryResult3D? CastRayFromCamera(this PhysicsDirectSpaceState3D dss, uint collisionMask = uint.MaxValue, Array<Rid>? exclude = null, float rayLength = 1000, bool collideWithAreas = false)
   {
     var st = (SceneTree)Engine.GetMainLoop();
     var vp = st.CurrentScene.GetViewport();
@@ -74,7 +83,7 @@ public static class PhysicsDirectSpaceState3DExtensions
   /// <param name="rayLength">Given in meters, how far the ray should extend.</param>
   /// <param name="collideWithAreas">Areas are only hit, if this parameter is set to true.</param>
   /// <returns>A <see href="Nullable" /> containing either null or a <see href="PhysicsRayQueryResult3D" />.</returns>
-  public static PhysicsRayQueryResult3D? CastRayFromViewPort(this PhysicsDirectSpaceState3D dss, Vector2 pos, uint collisionMask = uint.MaxValue, Godot.Collections.Array<Rid> exclude = null, float rayLength = 1000, bool collideWithAreas = false)
+  public static PhysicsRayQueryResult3D? CastRayFromViewPort(this PhysicsDirectSpaceState3D dss, Vector2 pos, uint collisionMask = uint.MaxValue, Array<Rid>? exclude = null, float rayLength = 1000, bool collideWithAreas = false)
   {
     var st = (SceneTree)Engine.GetMainLoop();
     var vp = st.CurrentScene.GetViewport();

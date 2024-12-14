@@ -29,12 +29,11 @@ public partial class DrawLayer : Control
     Vector2.Zero
   };
 
-  private List<Item> items;
+  private List<Item> items = [];
 
   public override void _Ready()
   {
     base._Ready();
-    items = new List<Item>();
     RenderingServer.FramePostDraw += ClearItems;
   }
 

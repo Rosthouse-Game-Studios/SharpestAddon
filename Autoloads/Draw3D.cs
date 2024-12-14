@@ -10,7 +10,7 @@ public partial class Draw3D : Node
 {
   public static Draw3D Instance => _instance;
   private static readonly Color defaultColor;
-  private static Draw3D _instance;
+  private static Draw3D _instance = null!;
 
   static Draw3D()
   {

@@ -25,8 +25,8 @@ public partial class Draw2D : Control
 
   public static Draw2D Instance => _instance;
   private static readonly Color defaultColor;
-  private static Draw2D _instance;
-  private Queue<Item> items;
+  private static Draw2D _instance = null!;
+  private Queue<Item> items = new();
 
   static Draw2D()
   {
