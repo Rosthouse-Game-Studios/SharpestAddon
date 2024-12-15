@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 #if TOOLS
 
@@ -16,6 +15,7 @@ public partial class SharpestAddon : EditorPlugin
     this.AddCustomType("WindowManager", "Node", GD.Load<Script>("res://addons/SharpestAddon/Autoloads/WindowManager.cs"), GD.Load<Texture2D>("res://addons/SharpestAddon/Autoloads/windowmanager.svg"));
     this.AddCustomType("ExtendedTransform3D", "Node3D", GD.Load<Script>("res://addons/SharpestAddon/Nodes/ExtendedRemoteTransform3D.cs"), GD.Load<Texture2D>("res://addons/SharpestAddon/Nodes/ExtendedRemoteTransform3D.svg"));
     this.AddCustomType("DebugOverlay", "CanvasLayer", GD.Load<Script>("res://addons/SharpestAddon/Autoloads/DebugOverlay/DebugOverlay.cs"), GD.Load<Texture2D>("Autoloads/DebugOverlay/debug_overlay_icon.png"));
+    this.AddCustomType("CsgStairs3D", "CsgBox3D", GD.Load<Script>("res://addons/SharpestAddon/Nodes/CsgStairs3D.cs"), GD.Load<Texture2D>("res://addons/SharpestAddon/Nodes/CsgStairs3D.svg"));
 
     this.AddAutoloadSingleton("Draw3D", "res://addons/SharpestAddon/Autoloads/Draw3D.cs");
     this.AddAutoloadSingleton("WindowManager", "res://addons/SharpestAddon/Autoloads/WindowManager.cs");
@@ -36,6 +36,7 @@ public partial class SharpestAddon : EditorPlugin
     this.RemoveCustomType("WindowManager");
     this.RemoveCustomType("ExtendedTransform3D");
     this.RemoveCustomType("DebugOverlay");
+    this.RemoveCustomType("CsgStairs3D");
   }
 }
 
