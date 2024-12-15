@@ -1,6 +1,3 @@
-
-
-using System.Globalization;
 using Godot;
 
 namespace rosthouse.sharpest.addon;
