@@ -1,5 +1,6 @@
+#nullable enable
+
 using Godot;
-using System.Linq;
 using System;
 using System.Reflection;
 using System.Reflection.Metadata;
