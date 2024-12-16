@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using Godot;
 
 namespace rosthouse.sharpest.addon;
@@ -15,6 +16,11 @@ public static class VectorExtensions
   public static int Yint(this Vector2 v)
   {
     return (int)v.Y;
+  }
+
+  public static Vector3 Set(this Vector3 v, Vector3.Axis axis, float value ){
+    v[(int)axis] = value;
+    return v;
   }
 
   public static Vector2 GetFourWayDirection(int x)
