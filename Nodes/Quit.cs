@@ -4,13 +4,12 @@ namespace rosthouse.sharpest.addon;
 
 public partial class Quit : Node
 {
-  [Export] private string quitAction = "ui_end";
+  [Export] private string quitAction = "quit_game";
+  [Export] private bool quitWhenMouseCaptured = false;
   public override void _Input(InputEvent @event)
   {
-    if (@event.IsActionPressed(quitAction) && OS.GetName() != "HTML5")
-    {
-      GetTree().Quit();
-    }
-    base._Input(@event);
+    if (OS.GetName() == "HTML5") return;
+    if (quitWhenMouseCaptured && Input.MouseMode == Input.MouseModeEnum.Captured) return;
+    // if (@event.IsActionPressed(quitAction)) GetTree().Quit();
   }
 }
