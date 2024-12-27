@@ -55,7 +55,6 @@ public partial class CsgStairs3D : CsgBox3D
         Material = Material
       };
       AddChild(stairsPolygon);
-      stairsPolygon.Owner = Owner;
     }
     MakeStairs();
   }
