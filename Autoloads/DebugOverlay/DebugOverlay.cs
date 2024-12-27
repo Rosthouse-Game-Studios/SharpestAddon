@@ -51,12 +51,6 @@ public partial class DebugOverlay : CanvasLayer
     this.label.Text = labelText;
   }
 
-
-  public override void _Notification(int what)
-  {
-    base._Notification(what);
-  }
-
   public void AddStat(string statName, Func<Variant> a){
     this.AddStat(statName, Callable.From(a));
   }
