@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-namespace rosthouse.sharpest.addon;
+namespace rosthouse.sharpest.addon.autoloads;
 
 /// <summary>
 /// This class contains some simple functions to draw primitives to the screen

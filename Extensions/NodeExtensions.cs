@@ -7,7 +7,7 @@ namespace rosthouse.sharpest.addon;
 public static class NodeExtensions
 {
 
-  public static Godot.Collections.Array<T> GetChildren<[MustBeVariant] T>(this Node n, bool includeInternal = false) where T : Node
+  public static Godot.Collections.Array<T> GetChildren<[MustBeVariant] T>(this Node n, bool includeInternal = false, bool recursive = false) where T : Node
   {
     var arr = new Godot.Collections.Array<T>();
     foreach (var c in n.GetChildren(includeInternal))
@@ -43,7 +43,6 @@ public static class NodeExtensions
     }
     return null;
   }
-
 
   public static Godot.Collections.Array<Node> GetChildrenRecursive(this Node n, bool includeInternal = false)
   {

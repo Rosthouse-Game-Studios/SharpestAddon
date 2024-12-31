@@ -1,6 +1,6 @@
 using Godot;
 
-namespace rosthouse.sharpest.addon;
+namespace rosthouse.sharpest.addon.autoloads;
 
 public partial class WindowManager : Node
 {

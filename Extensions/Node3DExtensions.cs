@@ -26,4 +26,12 @@ public static class Node3DExtensions
     );
     n.LookAt(targetPostition);
   }
+
+  public static void AlignWithY(this Node3D n, Vector3 axis){
+    var basis = n.GlobalBasis;
+    basis.Y = axis;
+    basis.X = -basis.Z.Cross(axis);
+    n.GlobalBasis = basis.Orthonormalized();
+  }
+
 }

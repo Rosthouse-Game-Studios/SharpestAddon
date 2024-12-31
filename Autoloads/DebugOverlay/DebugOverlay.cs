@@ -2,7 +2,7 @@ using System;
 using Godot;
 using Godot.Collections;
 
-namespace rosthouse.sharpest.addon;
+namespace rosthouse.sharpest.addon.autoloads.debug;
 
 
 public partial class DebugOverlay : CanvasLayer

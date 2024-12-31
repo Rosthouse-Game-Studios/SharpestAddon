@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-namespace rosthouse.sharpest.addon;
+namespace rosthouse.sharpest.addon.autoloads.debug;
 
 
 
