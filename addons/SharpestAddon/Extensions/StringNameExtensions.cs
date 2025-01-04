@@ -1,4 +1,3 @@
-
 using Godot;
 
 namespace rosthouse.sharpest.addon;

@@ -1,23 +1,18 @@
-
-
-
 using System;
-using System.Collections;
 using ImGuiNET;
 
-namespace rosthouse.sharpest.addon.utils
-{
-  public static class ImGuiUtils
-  {
+namespace rosthouse.sharpest.addon.utils;
 
-    public static bool InputInt64(string label, ref long value)
+public static class ImGuiUtils
+{
+
+  public static bool InputInt64(string label, ref long value)
+  {
+    unsafe
     {
-      unsafe
+      fixed (long* valPtr = &value)
       {
-        fixed (long* valPtr = &value)
-        {
-          return ImGui.InputScalar(label, ImGuiDataType.S64, (IntPtr)valPtr);
-        }
+        return ImGui.InputScalar(label, ImGuiDataType.S64, (IntPtr)valPtr);
       }
     }
   }

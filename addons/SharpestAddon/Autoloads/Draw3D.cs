@@ -8,13 +8,7 @@ namespace rosthouse.sharpest.addon;
 public partial class Draw3D : Node
 {
   public static Draw3D Instance => _instance;
-  private static readonly Color defaultColor;
   private static Draw3D _instance = null!;
-
-  static Draw3D()
-  {
-    defaultColor = Colors.WhiteSmoke;
-  }
 
   public override void _EnterTree()
   {
@@ -33,7 +27,7 @@ public partial class Draw3D : Node
     RenderingServer.FramePostDraw += Clear;
   }
 
-  public MeshInstance3D Line(Vector3 start, Vector3 end, Color color = new Color())
+  public MeshInstance3D Line(Vector3 start, Vector3 end, Color color = default)
   {
     var mi = new MeshInstance3D();
     var sm = new ImmediateMesh();
@@ -54,7 +48,7 @@ public partial class Draw3D : Node
     return mi;
   }
 
-  public MeshInstance3D Point(Vector3 pos, float radius = 0.05f, Color color = new Color())
+  public MeshInstance3D Point(Vector3 pos, float radius = 0.05f, Color color = default)
   {
     var mi = new MeshInstance3D();
     var sm = new SphereMesh();
