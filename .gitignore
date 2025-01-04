@@ -7,3 +7,5 @@ addons/*
 
 !addons/SharpestAddon
 .idea/
+
+TestResults/

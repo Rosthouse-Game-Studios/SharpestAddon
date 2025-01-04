@@ -4,7 +4,7 @@ using System;
 namespace rosthouse.sharpest.addon;
 public partial class WindowManager : Node
 {
-
+  public static string SingletonName => "WindowManager";
   private static WindowManager _instance = null!;
   public static WindowManager Instance => _instance;
 

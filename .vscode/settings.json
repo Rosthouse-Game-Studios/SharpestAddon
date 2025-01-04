@@ -1,3 +1,4 @@
 {
-  "dotnet.defaultSolution": "SharpestAddonTests.sln"
+  "dotnet.defaultSolution": "SharpestAddonTests.sln",
+  "dotnet.unitTests.runSettingsPath": ".runsettings"
 }

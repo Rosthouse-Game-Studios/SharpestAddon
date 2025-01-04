@@ -26,3 +26,8 @@ project/assembly_name="SharpestAddon"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/SharpestAddon/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
+
+[gdunit4]
+
+settings/test/test_lookup_folder="tests"
+settings/test/test_discovery=true
