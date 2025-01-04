@@ -9,13 +9,10 @@ namespace rosthouse.sharpest.addon
   public partial class Gizmo3D : Node3D
   {
     public static uint MASK = 32;
-    public static Gizmo3D Create(Node owner = null)
+    public static Gizmo3D Create(Node owner)
     {
       var g = GD.Load<PackedScene>("res://addons/SharpestAddon/Nodes/Gizmo3D/gizmo_3d.tscn").Instantiate<Gizmo3D>();
-      if (owner != null)
-      {
-        g.Owner = owner;
-      }
+      g.Owner = owner;
       return g;
     }
 
@@ -32,26 +29,24 @@ namespace rosthouse.sharpest.addon
     [Export] public NodePath Remote { get => GetNode<RemoteTransform3D>("%RemoteTransform").RemotePath; set => GetNode<RemoteTransform3D>("%RemoteTransform").RemotePath = value; }
     private Vector3 currentNormal;
     Vector2 dragStartPosition = new(0, 0);
-    private Handle currentHandle;
-
-
-    private Node3D translate;
-    private Node3D rotate;
-    private Control controls;
-    private Node3D visuals;
+    private Handle? currentHandle;
+    private Node3D? translate;
+    private Node3D? rotate;
+    private Control? controls;
+    private Node3D? visuals;
 
 
     public override void _Ready()
     {
       base._Ready();
 
-      this.visuals = GetNode<Node3D>("Visuals");
+      visuals = GetNode<Node3D>("Visuals");
 
-      this.translate = GetNode<Node3D>("Translate");
-      this.rotate = GetNode<Node3D>("Rotate");
+      translate = GetNode<Node3D>("Translate");
+      rotate = GetNode<Node3D>("Rotate");
 
-      this.controls = GetNode<Control>("%Controls");
-      this.VisibilityChanged += () => this.Rotation = Vector3.Zero;
+      controls = GetNode<Control>("%Controls");
+      VisibilityChanged += () => Rotation = Vector3.Zero;
     }
 
 
@@ -62,14 +57,13 @@ namespace rosthouse.sharpest.addon
 
       if (@event is InputEventMouseButton ev)
       {
-
         if (Input.IsActionJustReleased("ui_left_click"))
         {
           GD.Print("released");
-          if (this.currentHandle != null)
+          if (currentHandle != null)
           {
             vp.SetInputAsHandled();
-            this.currentHandle = null;
+            currentHandle = null;
           }
         }
 
@@ -79,17 +73,17 @@ namespace rosthouse.sharpest.addon
           var res = dss.CastRayFromCamera(collisionMask: MASK, collideWithAreas: true);
           if (res.HasValue && res.Value.GetCollisionObject3D() is Handle h)
           {
-            GD.Print($"Hit {res.Value.GetCollisionObject3D().Name}");
+            GD.Print($"Hit {h.Name}");
             vp.SetInputAsHandled();
-            this.currentHandle = h;
-            var mesh = res.Value.GetCollisionObject3D().GetNode<MeshInstance3D>("Mesh");
-            switch (this.currentHandle.Mode)
+            currentHandle = h;
+            var mesh = h.GetNode<MeshInstance3D>("Mesh");
+            switch (currentHandle.Mode)
             {
               case ActionType.MOVE:
-                this.HandleTranslateClick(ev, mesh);
+                HandleTranslateClick(ev, mesh);
                 break;
               case ActionType.ROTATE:
-                this.HandleRotateClick(ev, mesh, res.Value.normal);
+                HandleRotateClick(ev, mesh, res.Value.normal);
                 break;
               case ActionType.NONE:
                 break;
@@ -101,30 +95,37 @@ namespace rosthouse.sharpest.addon
     }
     public override void _Process(double delta)
     {
-      var size = (this.GlobalPosition - GetViewport().GetCamera3D().GlobalPosition).Length() * Scaling;
+      var size = (GlobalPosition - GetViewport().GetCamera3D().GlobalPosition).Length() * Scaling;
       Vector3 scale = new(size, size, size);
-      this.translate.Scale = scale;
-      this.rotate.Scale = scale;
+      if (translate != null)
+      {
+        translate.Scale = scale;
+      }
 
-      if (this.currentHandle == null)
+      if (rotate != null)
+      {
+        rotate.Scale = scale;
+      }
+
+      if (currentHandle == null)
       {
         return;
       }
 
-      switch (this.currentHandle.Mode)
+      switch (currentHandle.Mode)
       {
         case ActionType.MOVE:
-          this.HandleTranslation(this.currentHandle);
+          HandleTranslation(currentHandle);
           GetViewport().SetInputAsHandled();
           break;
         case ActionType.ROTATE:
-          this.HandleRotation(this.currentHandle, this.currentNormal);
+          HandleRotation(currentHandle, currentNormal);
           GetViewport().SetInputAsHandled();
           break;
         case ActionType.NONE:
           break;
       }
-      this.dragStartPosition = GetViewport().GetMousePosition();
+      dragStartPosition = GetViewport().GetMousePosition();
     }
 
     private void HandleTranslateClick(InputEventMouseButton @event, MeshInstance3D mesh)
@@ -132,7 +133,7 @@ namespace rosthouse.sharpest.addon
       if (Input.IsActionJustPressed("ui_left_click") && !@event.IsEcho())
       {
         GD.Print("clicked translate");
-        this.dragStartPosition = @event.Position;
+        dragStartPosition = @event.Position;
       }
     }
 
@@ -140,8 +141,8 @@ namespace rosthouse.sharpest.addon
     {
       if (@event.IsActionPressed("ui_left_click") && !@event.IsEcho())
       {
-        this.dragStartPosition = @event.Position;
-        this.currentNormal = normal;
+        dragStartPosition = @event.Position;
+        currentNormal = normal;
       }
     }
 
@@ -149,7 +150,7 @@ namespace rosthouse.sharpest.addon
     {
       var cam = GetViewport().GetCamera3D();
       var mp = GetViewport().GetMousePosition();
-      var step = (cam.UnprojectPosition(h.GlobalPosition) - cam.UnprojectPosition(this.GlobalPosition)).Normalized();
+      var step = (cam.UnprojectPosition(h.GlobalPosition) - cam.UnprojectPosition(GlobalPosition)).Normalized();
 
       var dis = mp - dragStartPosition;
       var output = step * dis;
@@ -160,23 +161,23 @@ namespace rosthouse.sharpest.addon
 
       GD.Print($"Diff{diff}");
 
-      this.Translate(diff);
-      this.EmitSignal(nameof(Moved), diff);
+      Translate(diff);
+      EmitSignal(nameof(Moved), diff);
     }
 
     public void HandleRotation(Handle h, Vector3 normal)
     {
       // material_override.albedo_color.a8 = 200
       var mp = GetViewport().GetMousePosition();
-      var parentCenter = GetViewport().GetCamera3D().UnprojectPosition(this.GlobalPosition);
+      var parentCenter = GetViewport().GetCamera3D().UnprojectPosition(GlobalPosition);
       var start = parentCenter.AngleToPoint(dragStartPosition);
       var angle = parentCenter.AngleToPoint(mp);
-      var dir = (GetViewport().GetCamera3D().GlobalPosition - this.GlobalPosition).Normalized();
+      var dir = (GetViewport().GetCamera3D().GlobalPosition - GlobalPosition).Normalized();
 
       var rotAngle = normal.Dot(dir) > 0 ? start - angle : angle - start;
 
-      this.RotateObjectLocal(normal, rotAngle);
-      this.EmitSignal(nameof(Rotated), normal, rotAngle);
+      RotateObjectLocal(normal, rotAngle);
+      EmitSignal(nameof(Rotated), normal, rotAngle);
     }
 
   }

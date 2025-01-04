@@ -6,8 +6,8 @@ using System.Diagnostics;
 namespace rosthouse.sharpest.addon
 {
 
+  [Tool]
   [DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
-
   public partial class ExtendedRemoteTransform3D : Node3D
   {
     [Flags]
@@ -22,12 +22,24 @@ namespace rosthouse.sharpest.addon
     [Export] private TransformFlags updateRotation;
     [Export] private TransformFlags updateScale;
 
-    [Export] private Node3D remoteTransform;
+    [Export] private Node3D remoteTransform = null!;
     [Export] private bool useGlobalTransform;
+    [Export] private bool runInEditor = false;
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
+      if (Engine.IsEditorHint() && !runInEditor)
+      {
+        return;
+      }
+
+      if (remoteTransform == null)
+      {
+        GD.PrintErr($"[{Name}] No remoteTransform is set");
+        return;
+      }
+
       UpdatePosition();
       UpdateRotation();
       UpdateScale();
@@ -35,31 +47,31 @@ namespace rosthouse.sharpest.addon
 
     private void UpdatePosition()
     {
-      if (this.useGlobalTransform)
+      if (useGlobalTransform)
       {
-        remoteTransform.GlobalPosition = this.UpdateVector(remoteTransform.GlobalPosition, this.GlobalPosition, updatePosition);
+        remoteTransform.GlobalPosition = UpdateVector(remoteTransform.GlobalPosition, GlobalPosition, updatePosition);
       }
       else
       {
-        remoteTransform.Position = this.UpdateVector(remoteTransform.Position, this.Position, updatePosition);
+        remoteTransform.Position = UpdateVector(remoteTransform.Position, Position, updatePosition);
       }
     }
 
     private void UpdateRotation()
     {
-      if (this.useGlobalTransform)
+      if (useGlobalTransform)
       {
-        remoteTransform.GlobalRotation = this.UpdateVector(remoteTransform.GlobalRotation, this.GlobalRotation, updateRotation);
+        remoteTransform.GlobalRotation = UpdateVector(remoteTransform.GlobalRotation, GlobalRotation, updateRotation);
       }
       else
       {
-        remoteTransform.Rotation = this.UpdateVector(remoteTransform.Rotation, this.Rotation, updateRotation);
+        remoteTransform.Rotation = UpdateVector(remoteTransform.Rotation, Rotation, updateRotation);
       }
     }
 
     private void UpdateScale()
     {
-      remoteTransform.Scale = this.UpdateVector(remoteTransform.Scale, this.Scale, updateScale);
+      remoteTransform.Scale = UpdateVector(remoteTransform.Scale, Scale, updateScale);
     }
 
     private Vector3 UpdateVector(Vector3 slave, Vector3 master, TransformFlags flags)
@@ -89,11 +101,12 @@ namespace rosthouse.sharpest.addon
 
     public override string[] _GetConfigurationWarnings()
     {
-      if (this.remoteTransform == null)
+      if (remoteTransform == null)
       {
-        return new string[] { "Warning: No remote transform selected" };
+        return ["Warning: No remote transform selected"];
       }
-      return Array.Empty<string>();
+
+      return [];
     }
 
   }

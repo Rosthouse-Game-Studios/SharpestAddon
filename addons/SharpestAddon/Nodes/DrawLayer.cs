@@ -32,12 +32,11 @@ namespace rosthouse.sharpest.addon
     Vector2.Zero
   };
 
-    private List<Item> items;
+    private List<Item> items = new();
 
     public override void _Ready()
     {
       base._Ready();
-      items = new List<Item>();
       RenderingServer.FramePostDraw += ClearItems;
     }
 
@@ -49,7 +48,7 @@ namespace rosthouse.sharpest.addon
 
     private void ClearItems()
     {
-      this.items.Clear();
+      items.Clear();
     }
 
     public override void _Draw()
@@ -61,19 +60,19 @@ namespace rosthouse.sharpest.addon
         switch (item.type)
         {
           case ItemType.Point:
-            this.DrawPoint(item);
+            DrawPoint(item);
             break;
           case ItemType.Line:
-            this._DrawLine(item);
+            _DrawLine(item);
             break;
           case ItemType.Arrow:
-            this.DrawArrow(item);
+            DrawArrow(item);
             break;
           case ItemType.Arc:
-            this._DrawArc(item);
+            _DrawArc(item);
             break;
           case ItemType.Disc:
-            this._DrawDisc(item);
+            _DrawDisc(item);
             break;
         }
       }
@@ -82,7 +81,7 @@ namespace rosthouse.sharpest.addon
     private void _DrawArc(Item item)
     {
       var center = this.UnprojectPosition(item.points[0]);
-      this.DrawArc(center, item.width, Mathf.Pi, Mathf.Pi * 2, 10, item.color);
+      DrawArc(center, item.width, Mathf.Pi, Mathf.Pi * 2, 10, item.color);
     }
 
     private void _DrawDisc(Item item)
@@ -96,7 +95,7 @@ namespace rosthouse.sharpest.addon
         // var p = item.points[0] +
       }
 
-      this.DrawArc(center, radius, 0, Mathf.Pi * 2, 10, item.color, item.width, true);
+      DrawArc(center, radius, 0, Mathf.Pi * 2, 10, item.color, item.width, true);
       // this.DrawMultilineColors()
       // this.DrawCircle(center, radius, item.color);
     }
@@ -110,43 +109,43 @@ namespace rosthouse.sharpest.addon
     {
       var screenPosStart = this.UnprojectPosition(item.points[0]);
       var screenPosEnd = this.UnprojectPosition(item.points[1]);
-      this.DrawLine(screenPosStart, screenPosEnd, item.color, item.width);
+      DrawLine(screenPosStart, screenPosEnd, item.color, item.width);
     }
 
     private void DrawPoint(Item item)
     {
       var screenPosStart = this.UnprojectPosition(item.points[0]);
-      this.DrawCircle(screenPosStart, item.width, item.color);
+      DrawCircle(screenPosStart, item.width, item.color);
     }
 
     public void DrawPoint(Vector3 position, Color c, float width = 1)
     {
-      this.items.Add(new Item()
+      items.Add(new Item()
       {
         points = new Vector3[] { position },
         color = c,
         type = ItemType.Point,
         width = width
       });
-      this.QueueRedraw();
+      QueueRedraw();
     }
 
     public void Arrow(Vector3 position, Vector3 direction, Color color, float width = 1)
     {
-      this.items.Add(new Item() { points = new Vector3[] { position, position + direction }, color = color, type = ItemType.Line, width = width });
-      this.QueueRedraw();
+      items.Add(new Item() { points = new Vector3[] { position, position + direction }, color = color, type = ItemType.Line, width = width });
+      QueueRedraw();
     }
 
     public void Disc(Vector3 position, float radius, Color color, float width = 1)
     {
-      this.items.Add(new Item { points = new Vector3[] { position, position + Vector3.Forward * radius }, color = color, type = ItemType.Disc, width = 50 });
-      this.QueueRedraw();
+      items.Add(new Item { points = new Vector3[] { position, position + Vector3.Forward * radius }, color = color, type = ItemType.Disc, width = 50 });
+      QueueRedraw();
     }
 
     public void Arc(Vector3 position, Vector3 normal, Color color)
     {
-      this.items.Add(new Item() { points = new Vector3[] { position, normal }, color = color, type = ItemType.Arc, width = 50 });
-      this.QueueRedraw();
+      items.Add(new Item() { points = new Vector3[] { position, normal }, color = color, type = ItemType.Arc, width = 50 });
+      QueueRedraw();
     }
   }
 }

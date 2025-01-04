@@ -38,7 +38,7 @@ namespace rosthouse.sharpest.addon
       return false;
     }
 
-    public static T GetChildByType<[MustBeVariant] T>(this Node n, bool includeInternal = false) where T : Node
+    public static T? GetChildByType<[MustBeVariant] T>(this Node n, bool includeInternal = false) where T : Node
     {
       foreach (var c in n.GetChildren(includeInternal))
       {
@@ -62,7 +62,7 @@ namespace rosthouse.sharpest.addon
       return children;
     }
 
-    public static T GetChildRecursive<[MustBeVariant] T>(this Node n, bool includeInternal = false) where T : Node
+    public static T? GetChildRecursive<[MustBeVariant] T>(this Node n, bool includeInternal = false) where T : Node
     {
       var children = new Godot.Collections.Array<Node>();
       foreach (var c in n.GetChildren(includeInternal))

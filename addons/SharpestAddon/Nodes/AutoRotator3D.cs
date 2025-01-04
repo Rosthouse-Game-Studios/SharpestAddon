@@ -20,7 +20,7 @@ namespace rosthouse.sharpest.addon
       {
         return;
       }
-      this.Rotate(delta);
+      Rotate(delta);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -30,13 +30,13 @@ namespace rosthouse.sharpest.addon
         return;
       }
 
-      this.Rotate(delta);
+      Rotate(delta);
     }
 
     private void Rotate(double delta)
     {
-      var parent = this.GetParent<Node3D>();
-      parent.Quaternion *= Quaternion.FromEuler(this.amount * (float)delta);
+      var parent = GetParent<Node3D>();
+      parent.Quaternion *= Quaternion.FromEuler(amount * (float)delta);
     }
   }
 }
