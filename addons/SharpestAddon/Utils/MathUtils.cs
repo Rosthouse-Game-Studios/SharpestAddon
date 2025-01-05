@@ -1,6 +1,6 @@
 using System;
 
-namespace rosthouse.sharpest.addon;
+namespace rosthouse.sharpest.addon.utils;
 
 public static class MathUtils
 {
