@@ -13,7 +13,7 @@ public partial class WindowManager : Node
   {
     if (_instance != null)
     {
-      this.QueueFree();
+      QueueFree();
     }
     else
     {
@@ -23,7 +23,7 @@ public partial class WindowManager : Node
 
   public void OpenWindow(Control n)
   {
-    this.OpenWindow(n, GetViewport().GetVisibleRect().Size / 2);
+    OpenWindow(n, GetViewport().GetVisibleRect().Size / 2);
   }
 
   public void OpenWindow(Control windowContent, Vector2 position, string title = "", bool useNativeWindow = true)
@@ -52,13 +52,13 @@ public partial class WindowManager : Node
       w = lw;
     }
     windowContent.TreeExiting += () => w.QueueFree();
-    this.AddChild(w);
+    AddChild(w);
   }
 
   public void OpenWindow(Control windowContent, Vector3 position)
   {
     var screenPos = GetWindow().GetCamera3D().UnprojectPosition(position);
-    this.OpenWindow(windowContent, screenPos);
+    OpenWindow(windowContent, screenPos);
   }
 
   public void OpenWindowTruncated(Control windowContent, Vector3 position)
@@ -66,25 +66,25 @@ public partial class WindowManager : Node
     var screenPos = GetWindow().GetCamera3D().UnprojectPosition(position);
     if (GetWindow().GetVisibleRect().HasPoint(screenPos))
     {
-      this.OpenWindow(windowContent, screenPos);
+      OpenWindow(windowContent, screenPos);
     }
     else
     {
-      this.OpenWindow(windowContent, GetViewport().GetVisibleRect().Size / 2);
+      OpenWindow(windowContent, GetViewport().GetVisibleRect().Size / 2);
     }
   }
 
   public void OpenPopup(Popup windowContent, Vector3 position)
   {
     var screenPos = GetWindow().GetCamera3D().UnprojectPosition(position);
-    this.OpenPopup(windowContent, screenPos);
+    OpenPopup(windowContent, screenPos);
   }
 
   public void OpenPopup(Popup popup, Vector2 position)
   {
 
     popup.FocusExited += () => popup.QueueFree();
-    this.AddChild(popup);
+    AddChild(popup);
     popup.Popup(new Rect2I(
      position.RountToInt(),
       popup.Size)

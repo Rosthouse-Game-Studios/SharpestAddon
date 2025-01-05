@@ -22,7 +22,7 @@ public partial class Draw3D : Node
     base._EnterTree();
     if (_instance != null)
     {
-      this.QueueFree();
+      QueueFree();
       return;
     }
     _instance = this;
@@ -31,7 +31,7 @@ public partial class Draw3D : Node
   // Called when the node enters the scene tree for the first time.
   public override void _Ready()
   {
-    RenderingServer.FramePostDraw += this.Clear;
+    RenderingServer.FramePostDraw += Clear;
   }
 
   public MeshInstance3D Line(Vector3 start, Vector3 end, Color color = new Color())
@@ -51,7 +51,7 @@ public partial class Draw3D : Node
     sm.SurfaceEnd();
 
     sm.SurfaceSetMaterial(0, mat);
-    this.AddChild(mi);
+    AddChild(mi);
     return mi;
   }
 
@@ -72,7 +72,7 @@ public partial class Draw3D : Node
     mat.ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded;
     mat.AlbedoColor = color;
 
-    this.AddChild(mi);
+    AddChild(mi);
     return mi;
   }
 
@@ -82,13 +82,13 @@ public partial class Draw3D : Node
     l.Text = text;
     l.Billboard = BaseMaterial3D.BillboardModeEnum.Enabled;
 
-    this.AddChild(l);
+    AddChild(l);
     return l;
   }
 
   public void Clear()
   {
-    foreach (var c in this.GetChildren())
+    foreach (var c in GetChildren())
     {
       c.QueueFree();
     }

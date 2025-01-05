@@ -29,12 +29,12 @@ public partial class DebugOverlay : CanvasLayer
   {
     if (instance != null)
     {
-      this.QueueFree();
+      QueueFree();
       return;
     }
     instance = this;
     label = GetNode<Label>("MarginContainer/Label");
-    this.ProcessPriority = -1000;
+    ProcessPriority = -1000;
   }
 
 
@@ -43,25 +43,25 @@ public partial class DebugOverlay : CanvasLayer
     base._Process(delta);
     var labelText = string.Empty;
 
-    foreach (var (key, c) in this.values)
+    foreach (var (key, c) in values)
     {
       labelText += $"{key}: {c.Call()}\n";
     }
 
-    this.label.Text = labelText;
+    label.Text = labelText;
   }
 
   public void AddStat(string statName, Func<Variant> a){
-    this.AddStat(statName, Callable.From(a));
+    AddStat(statName, Callable.From(a));
   }
 
   public void AddStat(string statName, Callable c)
   {
-    this.values[statName] = c;
+    values[statName] = c;
   }
 
   public void RemoveStat(string statName)
   {
-    this.values.Remove(statName);
+    values.Remove(statName);
   }
 }

@@ -14,13 +14,13 @@ public partial class LightWindow : Control
   // Called when the node enters the scene tree for the first time.
   public override void _Ready()
   {
-    GetNode<Button>("%CloseButton").Pressed += () => this.QueueFree();
-    GetNode<Button>("%ResizeButton").ButtonDown += () => this.resize = true;
-    GetNode<Button>("%ResizeButton").ButtonUp += () => this.resize = false;
-    GetNode<Label>("%WindowTitle").GuiInput += this.OnTitleInput;
-    this.contentContainer = GetNode<Control>("%Content");
-    this.MouseEntered += () => GD.Print("Mouse entered");
-    this.MouseExited += () => GD.Print("Mouse exited");
+    GetNode<Button>("%CloseButton").Pressed += () => QueueFree();
+    GetNode<Button>("%ResizeButton").ButtonDown += () => resize = true;
+    GetNode<Button>("%ResizeButton").ButtonUp += () => resize = false;
+    GetNode<Label>("%WindowTitle").GuiInput += OnTitleInput;
+    contentContainer = GetNode<Control>("%Content");
+    MouseEntered += () => GD.Print("Mouse entered");
+    MouseExited += () => GD.Print("Mouse exited");
   }
 
   private void OnTitleInput(InputEvent @event)
@@ -29,40 +29,40 @@ public partial class LightWindow : Control
     {
       if (iemb.ButtonIndex == MouseButton.Left && iemb.Pressed)
       {
-        this.drag = true;
-        this.offset = iemb.Position - this.Position;
+        drag = true;
+        offset = iemb.Position - Position;
       }
       else if (iemb.ButtonIndex == MouseButton.Left && !iemb.Pressed)
       {
-        this.drag = false;
+        drag = false;
       }
     }
-    if (@event is InputEventMouseMotion iemm && this.drag)
+    if (@event is InputEventMouseMotion iemm && drag)
     {
-      this.Position += iemm.Relative;
+      Position += iemm.Relative;
     }
   }
 
   public override void _Input(InputEvent @event)
   {
-    if (@event is InputEventMouseMotion iemm && this.resize)
+    if (@event is InputEventMouseMotion iemm && resize)
     {
-      this.Size = iemm.Position - this.Position;
+      Size = iemm.Position - Position;
 
-      if (this.RespectContentMinSize)
+      if (RespectContentMinSize)
       {
-        var child = this.contentContainer.GetChild<Control>(0);
-        var minSize = this.contentContainer.GetChild<Control>(0).CustomMinimumSize;
-        this.Size = new Vector2(
-          Mathf.Max(this.Size.X, minSize.X),
-          Mathf.Max(this.Size.Y, minSize.Y)
+        var child = contentContainer.GetChild<Control>(0);
+        var minSize = contentContainer.GetChild<Control>(0).CustomMinimumSize;
+        Size = new Vector2(
+          Mathf.Max(Size.X, minSize.X),
+          Mathf.Max(Size.Y, minSize.Y)
         );
       }
-      this.contentContainer.GetChild<Control>(0).Size = this.Size;
+      contentContainer.GetChild<Control>(0).Size = Size;
       GetViewport().SetInputAsHandled();
     }
 
-    if (!this.Passthrough)
+    if (!Passthrough)
     {
       GetViewport().SetInputAsHandled();
     }
@@ -74,12 +74,12 @@ public partial class LightWindow : Control
 
   public void SetContent(Control c, bool wrapContent = false)
   {
-    this.contentContainer.AddChild(c);
+    contentContainer.AddChild(c);
     if (wrapContent)
     {
-      this.Size = c.Size;
+      Size = c.Size;
     }
-    c.TreeExiting += () => this.QueueFree();
+    c.TreeExiting += () => QueueFree();
   }
 
 }

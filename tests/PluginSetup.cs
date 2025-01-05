@@ -1,8 +1,8 @@
 using GdUnit4;
-using Godot;
+using rosthouse.sharpest.addon.autoloads;
 using static GdUnit4.Assertions;
 
-namespace rosthouse.sharpest.addon.test;
+namespace rosthouse.sharpest.addon.tests;
 
 [TestSuite]
 public class PluginSetup

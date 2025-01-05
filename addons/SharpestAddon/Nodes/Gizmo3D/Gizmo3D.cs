@@ -51,9 +51,9 @@ public partial class Gizmo3D : Node3D
   [Export]
   TransformFlags TranslationFlags
   {
-    get => this.translationFlags; set
+    get => translationFlags; set
     {
-      this.translationFlags = value;
+      translationFlags = value;
       if (!Engine.IsEditorHint())
       {
         SetAxisActive(TranslationFlags, TransformFlags.X, "%XAxis");
@@ -66,9 +66,9 @@ public partial class Gizmo3D : Node3D
   [Export]
   TransformFlags RotationFlags
   {
-    get => this.rotationFlags; set
+    get => rotationFlags; set
     {
-      this.rotationFlags = value;
+      rotationFlags = value;
       if (!Engine.IsEditorHint())
       {
         SetAxisActive(RotationFlags, TransformFlags.X, "%XPlane");
@@ -83,10 +83,10 @@ public partial class Gizmo3D : Node3D
   {
     base._Ready();
 
-    this.translate = GetNode<Node3D>("Translate");
-    this.rotate = GetNode<Node3D>("Rotate");
+    translate = GetNode<Node3D>("Translate");
+    rotate = GetNode<Node3D>("Rotate");
 
-    this.VisibilityChanged += () => this.Rotation = Vector3.Zero;
+    VisibilityChanged += () => Rotation = Vector3.Zero;
 
     SetAxisActive(TranslationFlags, TransformFlags.X, "%XAxis");
     SetAxisActive(TranslationFlags, TransformFlags.Y, "%YAxis");
@@ -118,10 +118,10 @@ public partial class Gizmo3D : Node3D
       if (Input.IsActionJustReleased("ui_left_click"))
       {
         GD.Print("released");
-        if (this.currentHandle != null)
+        if (currentHandle != null)
         {
           vp.SetInputAsHandled();
-          this.currentHandle = null;
+          currentHandle = null;
         }
       }
 
@@ -133,15 +133,15 @@ public partial class Gizmo3D : Node3D
         {
           GD.Print($"Hit {res.Value.GetCollisionObject3D().Name}");
           vp.SetInputAsHandled();
-          this.currentHandle = h;
+          currentHandle = h;
           var mesh = res.Value.GetCollisionObject3D().GetNode<MeshInstance3D>("Mesh");
-          switch (this.currentHandle.Mode)
+          switch (currentHandle.Mode)
           {
             case ActionType.MOVE:
-              this.HandleTranslateClick(ev, mesh);
+              HandleTranslateClick(ev, mesh);
               break;
             case ActionType.ROTATE:
-              this.HandleRotateClick(ev, mesh, res.Value.normal);
+              HandleRotateClick(ev, mesh, res.Value.normal);
               break;
             case ActionType.NONE:
               break;
@@ -153,30 +153,30 @@ public partial class Gizmo3D : Node3D
   }
   public override void _Process(double delta)
   {
-    var size = (this.GlobalPosition - GetViewport().GetCamera3D().GlobalPosition).Length() * Scaling;
+    var size = (GlobalPosition - GetViewport().GetCamera3D().GlobalPosition).Length() * Scaling;
     Vector3 scale = new(size, size, size);
-    this.translate.Scale = scale;
-    this.rotate.Scale = scale;
+    translate.Scale = scale;
+    rotate.Scale = scale;
 
-    if (this.currentHandle == null)
+    if (currentHandle == null)
     {
       return;
     }
 
-    switch (this.currentHandle.Mode)
+    switch (currentHandle.Mode)
     {
       case ActionType.MOVE:
-        this.HandleTranslation(this.currentHandle);
+        HandleTranslation(currentHandle);
         GetViewport().SetInputAsHandled();
         break;
       case ActionType.ROTATE:
-        this.HandleRotation(this.currentHandle, this.currentNormal);
+        HandleRotation(currentHandle, currentNormal);
         GetViewport().SetInputAsHandled();
         break;
       case ActionType.NONE:
         break;
     }
-    this.dragStartPosition = GetViewport().GetMousePosition();
+    dragStartPosition = GetViewport().GetMousePosition();
   }
 
   private void HandleTranslateClick(InputEventMouseButton @event, MeshInstance3D mesh)
@@ -184,7 +184,7 @@ public partial class Gizmo3D : Node3D
     if (Input.IsActionJustPressed("ui_left_click") && !@event.IsEcho())
     {
       GD.Print("clicked translate");
-      this.dragStartPosition = @event.Position;
+      dragStartPosition = @event.Position;
     }
   }
 
@@ -192,8 +192,8 @@ public partial class Gizmo3D : Node3D
   {
     if (@event.IsActionPressed("ui_left_click") && !@event.IsEcho())
     {
-      this.dragStartPosition = @event.Position;
-      this.currentNormal = normal;
+      dragStartPosition = @event.Position;
+      currentNormal = normal;
     }
   }
 
@@ -201,7 +201,7 @@ public partial class Gizmo3D : Node3D
   {
     var cam = GetViewport().GetCamera3D();
     var mp = GetViewport().GetMousePosition();
-    var step = (cam.UnprojectPosition(h.GlobalPosition) - cam.UnprojectPosition(this.GlobalPosition)).Normalized();
+    var step = (cam.UnprojectPosition(h.GlobalPosition) - cam.UnprojectPosition(GlobalPosition)).Normalized();
 
     var dis = mp - dragStartPosition;
     var output = step * dis;
@@ -212,23 +212,23 @@ public partial class Gizmo3D : Node3D
 
     GD.Print($"Diff{diff}");
 
-    this.Translate(diff);
-    this.EmitSignal(nameof(Moved), diff);
+    Translate(diff);
+    EmitSignal(nameof(Moved), diff);
   }
 
   public void HandleRotation(Handle h, Vector3 normal)
   {
     // material_override.albedo_color.a8 = 200
     var mp = GetViewport().GetMousePosition();
-    var parentCenter = GetViewport().GetCamera3D().UnprojectPosition(this.GlobalPosition);
+    var parentCenter = GetViewport().GetCamera3D().UnprojectPosition(GlobalPosition);
     var start = parentCenter.AngleToPoint(dragStartPosition);
     var angle = parentCenter.AngleToPoint(mp);
-    var dir = (GetViewport().GetCamera3D().GlobalPosition - this.GlobalPosition).Normalized();
+    var dir = (GetViewport().GetCamera3D().GlobalPosition - GlobalPosition).Normalized();
 
     var rotAngle = normal.Dot(dir) > 0 ? start - angle : angle - start;
 
-    this.RotateObjectLocal(normal, rotAngle);
-    this.EmitSignal(nameof(Rotated), normal, rotAngle);
+    RotateObjectLocal(normal, rotAngle);
+    EmitSignal(nameof(Rotated), normal, rotAngle);
   }
 
 }
