@@ -20,6 +20,7 @@ Draw3D="*res://addons/SharpestAddon/Autoloads/Draw3D.cs"
 WindowManager="*res://addons/SharpestAddon/Autoloads/WindowManager.cs"
 DebugOverlay="*res://addons/SharpestAddon/Autoloads/DebugOverlay/debug_overlay.tscn"
 Draw2D="*res://addons/SharpestAddon/Autoloads/DebugDraw/Draw2D.cs"
+DebugOverLay="*res://addons/SharpestAddon/Autoloads/DebugOverlay/debug_overlay.tscn"
 
 [dotnet]
 
