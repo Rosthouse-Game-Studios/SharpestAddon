@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://con0j4x1u2kgg"]
 
-[ext_resource type="Script" path="res://addons/SharpestAddon/Nodes/LightWindow.cs" id="1_dcfn7"]
-[ext_resource type="Texture2D" uid="uid://1ndgu2vfava" path="res://addons/SharpestAddon/Textures/Icons/close.svg" id="2_s053t"]
-[ext_resource type="Theme" uid="uid://cohxemgv24phg" path="res://simulator_theme.tres" id="2_vt0op"]
-[ext_resource type="Texture2D" uid="uid://d4gcf37n4by34" path="res://addons/SharpestAddon/Textures/Icons/grab_resize.svg" id="3_dqdiv"]
+[ext_resource type="Script" uid="uid://dnr7n4sc1m1fq" path="res://addons/SharpestAddon/src/nodes/LightWindow.cs" id="1_dcfn7"]
+[ext_resource type="Texture2D" uid="uid://dbm51766qo6f3" path="res://addons/SharpestAddon/assets/icons/close.svg" id="2_s053t"]
+[ext_resource type="Theme" path="res://simulator_theme.tres" id="2_vt0op"]
+[ext_resource type="Texture2D" uid="uid://duiewihbnnbqo" path="res://addons/SharpestAddon/assets/icons/grab_resize.svg" id="3_dqdiv"]
 
 [node name="LightWindow" type="Control"]
 top_level = true

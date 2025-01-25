@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://cmalpspodvis5"]
 
-[ext_resource type="Script" path="res://addons/SharpestAddon/Nodes/Gizmo3D/Gizmo3D.cs" id="1_uicbw"]
-[ext_resource type="ArrayMesh" uid="uid://0121ilbgtef5" path="res://addons/SharpestAddon/Nodes/Gizmo3D/arrow_Cylinder.res" id="3_5v1fq"]
-[ext_resource type="Script" path="res://addons/SharpestAddon/Nodes/Gizmo3D/Handle.cs" id="3_23c6t"]
-[ext_resource type="Material" uid="uid://bpcnhe276aswc" path="res://addons/SharpestAddon/Nodes/Gizmo3D/x_mat.tres" id="4_xki41"]
-[ext_resource type="Material" uid="uid://b5d2y33ufullv" path="res://addons/SharpestAddon/Nodes/Gizmo3D/y_mat.tres" id="5_pxcsr"]
-[ext_resource type="Material" uid="uid://cqsss6o3kwloi" path="res://addons/SharpestAddon/Nodes/Gizmo3D/z_mat.tres" id="6_g55e6"]
+[ext_resource type="Script" uid="uid://b5ndr1824sew1" path="res://addons/SharpestAddon/src/nodes/gizmo3d/Gizmo3D.cs" id="1_uicbw"]
+[ext_resource type="ArrayMesh" uid="uid://0121ilbgtef5" path="res://addons/SharpestAddon/resources/meshes/arrow_Cylinder.res" id="3_5v1fq"]
+[ext_resource type="Script" uid="uid://bhgwxewg5vu6b" path="res://addons/SharpestAddon/src/nodes/gizmo3d/Handle.cs" id="3_23c6t"]
+[ext_resource type="Material" uid="uid://bpcnhe276aswc" path="res://addons/SharpestAddon/resources/materials/x_mat.tres" id="4_xki41"]
+[ext_resource type="Material" uid="uid://b5d2y33ufullv" path="res://addons/SharpestAddon/resources/materials/y_mat.tres" id="5_pxcsr"]
+[ext_resource type="Material" uid="uid://cqsss6o3kwloi" path="res://addons/SharpestAddon/resources/materials/z_mat.tres" id="6_g55e6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ec30y"]
 radius = 0.150853

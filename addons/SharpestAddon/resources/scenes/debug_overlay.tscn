@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://nm5ev81835l1"]
 
-[ext_resource type="Script" path="res://addons/SharpestAddon/Autoloads/DebugOverlay/DebugOverlay.cs" id="1_j7drd"]
+[ext_resource type="Script" uid="uid://dfqvnt5a65ied" path="res://addons/SharpestAddon/src/autoloads/debugoverlay/DebugOverlay.cs" id="1_j7drd"]
 
 [node name="debug_overlay" type="CanvasLayer"]
 follow_viewport_enabled = true
