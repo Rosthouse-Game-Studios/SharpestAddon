@@ -16,10 +16,7 @@ public partial class Draw3D : Node
   {
     defaultColor = Colors.WhiteSmoke;
   }
-
-  public override void _EnterTree()
-  {
-    base._EnterTree();
+  public Draw3D() : base()  {
     if (_instance != null)
     {
       QueueFree();

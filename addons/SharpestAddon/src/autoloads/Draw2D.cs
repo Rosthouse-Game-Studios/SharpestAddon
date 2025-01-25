@@ -33,15 +33,20 @@ public partial class Draw2D : Control
     defaultColor = Colors.WhiteSmoke;
   }
 
-  public override void _EnterTree()
+  public Draw2D() : base()
   {
-    base._EnterTree();
+
     if (_instance != null)
     {
       QueueFree();
       return;
     }
     _instance = this;
+  }
+
+  public override void _EnterTree()
+  {
+    base._EnterTree();
     items = new Queue<Item>();
   }
 

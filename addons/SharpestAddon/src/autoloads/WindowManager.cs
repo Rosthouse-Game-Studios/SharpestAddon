@@ -9,17 +9,15 @@ public partial class WindowManager : Node
   private static WindowManager _instance = null!;
   public static WindowManager Instance => _instance;
 
-
-  public override void _EnterTree()
+  public WindowManager() : base()
   {
+
     if (_instance != null)
     {
       QueueFree();
+      return;
     }
-    else
-    {
-      _instance = this;
-    }
+    _instance = this;
   }
 
   public void OpenWindow(Control n)

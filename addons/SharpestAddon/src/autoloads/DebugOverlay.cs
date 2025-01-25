@@ -25,18 +25,20 @@ public partial class DebugOverlay : CanvasLayer
   private Dictionary<string, Callable> values = new Dictionary<string, Callable>();
   private Label label = null!;
 
-  public override void _Ready()
-  {
+  public DebugOverlay() : base(){
     if (instance != null)
     {
       QueueFree();
       return;
     }
     instance = this;
+  }
+
+  public override void _Ready()
+  {
     label = GetNode<Label>("MarginContainer/Label");
     ProcessPriority = -1000;
   }
-
 
   public override void _Process(double delta)
   {
@@ -51,11 +53,15 @@ public partial class DebugOverlay : CanvasLayer
     label.Text = labelText;
   }
 
-  public void AddStat(string statName, Func<Variant> a){
-    AddStat(statName, Callable.From(a));
+  public void SetStat(string statName, Func<Variant> a){
+    SetStat(statName, Callable.From(a));
   }
 
-  public void AddStat(string statName, Callable c)
+  public void SetStat(string statname, Variant value){
+    SetStat(statname, () => value);
+  }
+
+  public void SetStat(string statName, Callable c)
   {
     values[statName] = c;
   }

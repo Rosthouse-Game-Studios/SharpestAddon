@@ -20,4 +20,9 @@ public static class GodotCollectionsExtensions
   {
     return new Array<T>(t.ToArray());
   }
+
+
+  public static string PrettyPrint(this Dictionary d, bool singleLine = false){
+    return string.Join(singleLine ? ',' : '\n', d.Select(a => $"\t{a.Key}: {a.Value}"));
+  }
 }

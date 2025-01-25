@@ -6,14 +6,15 @@ namespace rosthouse.sharpest.addon.autoloads;
 
 public partial class LaunchManager : Node
 {
-
   public override void _Ready()
   {
     var dict = OS.GetCmdlineArgs().ToDictionary(v => v.TrimPrefix("--").Split("=").First(), v =>
     {
-      var split = v.TrimPrefix("--").Split();
+      var split = v.TrimPrefix("--").Split('=');
       return split.Count() == 2 ? split[1] : null;
     });
+
+    GD.Print(string.Join('\n', dict.Select(a => $"{a.Key}: {a.Value}")));
 
     if (dict.ContainsKey("server"))
     {
