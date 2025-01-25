@@ -1,4 +1,5 @@
 using Godot;
+using rosthouse.sharpest.addon.nodes;
 
 namespace rosthouse.sharpest.addon.autoloads;
 

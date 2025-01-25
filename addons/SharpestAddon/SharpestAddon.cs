@@ -16,13 +16,13 @@ public partial class SharpestAddon : EditorPlugin {
     AddCustomType(nameof(Draw3D), "Node", GD.Load<Script>("res://addons/SharpestAddon/src/autoloads/Draw3D.cs"), GD.Load<Texture2D>("res://addons/SharpestAddon/assets/icons/draw3d.svg"));
     AddCustomType(nameof(WindowManager), "Node", GD.Load<Script>("res://addons/SharpestAddon/src/autoloads/WindowManager.cs"), GD.Load<Texture2D>("res://addons/SharpestAddon/assets/icons/windowmanager.svg"));
     AddCustomType(nameof(ExtendedRemoteTransform3D), "Node3D", GD.Load<Script>("res://addons/SharpestAddon/src/nodes/ExtendedRemoteTransform3D.cs"), GD.Load<Texture2D>("res://addons/SharpestAddon/assets/icons/ExtendedRemoteTransform3D.svg"));
-    AddCustomType(nameof(DebugOverlay), "CanvasLayer", GD.Load<Script>("res://addons/SharpestAddon/src/autoloads/DebugOverlay/DebugOverlay.cs"), GD.Load<Texture2D>("res://addons/SharpestAddon/assets/icons/DebugOverlay/debug_overlay_icon.png"));
+    AddCustomType(nameof(DebugOverlay), "CanvasLayer", GD.Load<Script>("res://addons/SharpestAddon/src/autoloads/DebugOverlay/DebugOverlay.cs"), GD.Load<Texture2D>("res://addons/SharpestAddon/assets/icons/debug_overlay_icon.png"));
     AddCustomType(nameof(CsgStairs3D), "CSGBox3D", GD.Load<Script>("res://addons/SharpestAddon/src/nodes/CsgStairs3D.cs"), GD.Load<Texture2D>("res://addons/SharpestAddon/assets/icons/CsgStairs3D.svg"));
 
     AddAutoloadSingleton(nameof(Draw3D), "res://addons/SharpestAddon/src/autoloads/Draw3D.cs");
     AddAutoloadSingleton(nameof(WindowManager), "res://addons/SharpestAddon/src/autoloads/WindowManager.cs");
     AddAutoloadSingleton(nameof(DebugOverlay), "res://addons/SharpestAddon/resources/scenes/debug_overlay.tscn");
-    AddAutoloadSingleton(nameof(Draw2D), "res://addons/SharpestAddon/src/autoloads/DebugDraw/Draw2D.cs");
+    AddAutoloadSingleton(nameof(Draw2D), "res://addons/SharpestAddon/src/autoloads/Draw2D.cs");
     AddAutoloadSingleton(nameof(LaunchManager), "res://addons/SharpestAddon/src/autoloads/LaunchManager.cs");
   }
 
