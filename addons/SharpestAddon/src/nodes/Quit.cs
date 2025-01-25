@@ -10,6 +10,5 @@ public partial class Quit : Node
   {
     if (OS.GetName() == "HTML5") return;
     if (quitWhenMouseCaptured && Input.MouseMode == Input.MouseModeEnum.Captured) return;
-    // if (@event.IsActionPressed(quitAction)) GetTree().Quit();
   }
 }

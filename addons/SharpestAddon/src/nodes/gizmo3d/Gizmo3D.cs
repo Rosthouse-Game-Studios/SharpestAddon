@@ -14,7 +14,7 @@ public partial class Gizmo3D : Node3D
    Gizmo3D.TransformFlags translation = TransformFlags.X | TransformFlags.Y | TransformFlags.Z,
    Gizmo3D.TransformFlags rotation = TransformFlags.X | TransformFlags.Y | TransformFlags.Z)
   {
-    var g = GD.Load<PackedScene>("res://addons/SharpestAddon/Nodes/Gizmo3D/gizmo_3d.tscn").Instantiate<Gizmo3D>();
+    var g = GD.Load<PackedScene>("res://addons/SharpestAddon/resources/scenes/gizmo_3d.tscn").Instantiate<Gizmo3D>();
     parent.AddChild(g);
     g.Owner = owner ?? parent.Owner;
     g.TranslationFlags = translation;

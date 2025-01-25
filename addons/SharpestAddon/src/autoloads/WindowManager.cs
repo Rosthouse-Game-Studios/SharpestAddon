@@ -43,7 +43,7 @@ public partial class WindowManager : Node
     }
     else
     {
-      var lw = GD.Load<PackedScene>("res://addons/SharpestAddon/Nodes/light_window.tscn").Instantiate<LightWindow>();
+      var lw = GD.Load<PackedScene>("res://addons/resources/scenes/light_window.tscn").Instantiate<LightWindow>();
       lw.SetContent(windowContent, true);
       lw.SetTitle(title);
       lw.Passthrough = true;
