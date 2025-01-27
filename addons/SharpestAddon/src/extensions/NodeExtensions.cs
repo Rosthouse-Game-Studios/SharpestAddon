@@ -105,4 +105,11 @@ public static class NodeExtensions
     }
     return null;
   }
+
+  public static void QueueFreeChildren(this Node n, bool includeInternal = false){
+    foreach (var c in n.GetChildren(includeInternal))
+    {
+      c.QueueFree();
+    }
+  }
 }
