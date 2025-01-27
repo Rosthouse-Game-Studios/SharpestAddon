@@ -1,5 +1,4 @@
-
-
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -22,7 +21,19 @@ public static class GodotCollectionsExtensions
   }
 
 
-  public static string PrettyPrint(this Dictionary d, bool singleLine = false){
+  public static string PrettyPrint(this Dictionary d, bool singleLine = false)
+  {
     return string.Join(singleLine ? ',' : '\n', d.Select(a => $"\t{a.Key}: {a.Value}"));
+  }
+
+  public static Godot.Collections.Dictionary<TKey, TElement> ToGodotDictionary<TSource, [MustBeVariant] TKey, [MustBeVariant] TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector) where TKey : notnull
+  {
+    var godotDict = new Godot.Collections.Dictionary<TKey, TElement>();
+    foreach (var src in source)
+    {
+      godotDict.Add(keySelector(src), elementSelector(src));
+    }
+
+    return godotDict;
   }
 }

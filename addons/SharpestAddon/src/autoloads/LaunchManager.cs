@@ -1,14 +1,16 @@
 using Godot;
-using rosthouse.rogueshooter;
+using Godot.Collections;
 using System.Linq;
 
 namespace rosthouse.sharpest.addon.autoloads;
 
 public partial class LaunchManager : Node
 {
+  [Signal] public delegate void CommandLineParsedEventHandler(Dictionary<string, string?> arguments);
+
   public override void _Ready()
   {
-    var dict = OS.GetCmdlineArgs().ToDictionary(v => v.TrimPrefix("--").Split("=").First(), v =>
+    var dict = OS.GetCmdlineArgs().ToGodotDictionary(v => v.TrimPrefix("--").Split("=").First(), v =>
     {
       var split = v.TrimPrefix("--").Split('=');
       return split.Count() == 2 ? split[1] : null;
@@ -16,14 +18,6 @@ public partial class LaunchManager : Node
 
     GD.Print(string.Join('\n', dict.Select(a => $"{a.Key}: {a.Value}")));
 
-    if (dict.ContainsKey("server"))
-    {
-      var port = dict.ContainsKey("port") ? int.Parse(dict["port"]) : 1027;
-      EventBus.Instance.RequestServer(port);
-    }
-
-    if(dict.TryGetValue("title", out var title)){
-      GetViewport().GetWindow().Title = title;
-    }
+    EmitSignal(SignalName.CommandLineParsed, dict);
   }
 }
