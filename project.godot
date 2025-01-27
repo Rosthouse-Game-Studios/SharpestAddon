@@ -11,16 +11,17 @@ config_version=5
 [application]
 
 config/name="SharpestAddon"
-config/features=PackedStringArray("4.3", "C#", "Forward Plus")
+config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Draw3D="*res://addons/SharpestAddon/Autoloads/Draw3D.cs"
-WindowManager="*res://addons/SharpestAddon/Autoloads/WindowManager.cs"
-DebugOverlay="*res://addons/SharpestAddon/Autoloads/DebugOverlay/debug_overlay.tscn"
-Draw2D="*res://addons/SharpestAddon/Autoloads/DebugDraw/Draw2D.cs"
+Draw3D="*res://addons/SharpestAddon/src/autoloads/Draw3D.cs"
+WindowManager="*res://addons/SharpestAddon/src/autoloads/WindowManager.cs"
+DebugOverlay="*res://addons/SharpestAddon/resources/scenes/debug_overlay.tscn"
+Draw2D="*res://addons/SharpestAddon/src/autoloads/Draw2D.cs"
 DebugOverLay="*res://addons/SharpestAddon/Autoloads/DebugOverlay/debug_overlay.tscn"
+LaunchManager="*res://addons/SharpestAddon/src/autoloads/LaunchManager.cs"
 
 [dotnet]
 
@@ -28,7 +29,7 @@ project/assembly_name="SharpestAddon"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/SharpestAddon/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
+enabled=PackedStringArray("res://addons/SharpestAddon/plugin.cfg")
 
 [gdunit4]
 
