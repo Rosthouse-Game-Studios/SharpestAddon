@@ -16,12 +16,12 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+DebugOverLay="*res://addons/SharpestAddon/Autoloads/DebugOverlay/debug_overlay.tscn"
+LaunchManager="*res://addons/SharpestAddon/src/autoloads/LaunchManager.cs"
 Draw3D="*res://addons/SharpestAddon/src/autoloads/Draw3D.cs"
 WindowManager="*res://addons/SharpestAddon/src/autoloads/WindowManager.cs"
 DebugOverlay="*res://addons/SharpestAddon/resources/scenes/debug_overlay.tscn"
 Draw2D="*res://addons/SharpestAddon/src/autoloads/Draw2D.cs"
-DebugOverLay="*res://addons/SharpestAddon/Autoloads/DebugOverlay/debug_overlay.tscn"
-LaunchManager="*res://addons/SharpestAddon/src/autoloads/LaunchManager.cs"
 
 [dotnet]
 
@@ -29,7 +29,7 @@ project/assembly_name="SharpestAddon"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/SharpestAddon/plugin.cfg")
+enabled=PackedStringArray("res://addons/SharpestAddon/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
 
 [gdunit4]
 
