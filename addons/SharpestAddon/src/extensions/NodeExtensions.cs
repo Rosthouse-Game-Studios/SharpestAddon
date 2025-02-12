@@ -1,5 +1,6 @@
 #nullable enable
 
+using System.Diagnostics.CodeAnalysis;
 using Godot;
 
 namespace rosthouse.sharpest.addon;
@@ -25,7 +26,8 @@ public static class NodeExtensions
       if (c is T t)
       {
         arr.Add(t);
-        if(recursive){
+        if (recursive)
+        {
           arr.AddRange(t.GetChildren<T>(includeInternal, recursive));
         }
       }
@@ -75,6 +77,20 @@ public static class NodeExtensions
       }
     }
     return null;
+  }
+
+  /// <summary>
+  /// Gets the first child of a <see cref="Node"/> fitting the type parameter.
+  /// </summary>
+  /// <typeparam name="T">A type of <see cref="Variant"/></typeparam>
+  /// <param name="n">The node for which we want to get a child.</param>
+  /// <param name="includeInternal">If internal nodes should also be considered.</param>
+  /// <param name="recursive">If the tree should be searched recursively. This enables depth-first search</param>
+  /// <returns>The found node, null otherwise</returns>
+  public static bool TryGetChild<[MustBeVariant] T>(this Node n, [NotNullWhen(true)] out T? child, bool includeInternal = false, bool recursive = false) where T : Node
+  {
+    child = GetFirstChildByType<T>(n, includeInternal, recursive);
+    return child is not null;
   }
 
   /// <summary>
