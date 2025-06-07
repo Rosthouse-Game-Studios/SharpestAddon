@@ -21,9 +21,9 @@ jobs:
 
       - name: Zip subdirectory
         run: |
-          cd addons
+          cd addons/SharpestAddon/
           zip -r ../$ZIP_NAME .
-          cd ..
+          cd ../../
 
       - name: Create Release
         id: create_release
