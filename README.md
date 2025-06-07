@@ -1,3 +1,5 @@
+[![🤖 Release](https://github.com/Rosthouse-Game-Studios/SharpestAddon/actions/workflows/main.yml/badge.svg)](https://github.com/Rosthouse-Game-Studios/SharpestAddon/actions/workflows/main.yml)
+
 # SharpestAddon
 
 This repository contains a number of extensions, autoloads, nodes and scenes that I found myself using time and time again. It doesn't have a specific strategy what is in it, but rather what I actually use in several projects.
