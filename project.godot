@@ -29,7 +29,7 @@ project/assembly_name="SharpestAddon"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/SharpestAddon/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
+enabled=PackedStringArray("res://addons/SharpestAddon/plugin.cfg")
 
 [gdunit4]
 
