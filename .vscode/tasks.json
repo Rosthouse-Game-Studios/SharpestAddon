@@ -7,7 +7,6 @@
       "type": "process",
       "args": [
         "build",
-        "--no-restore"
       ],
       "problemMatcher": "$msCompile",
       "presentation": {

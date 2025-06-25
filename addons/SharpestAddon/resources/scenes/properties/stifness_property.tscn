@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dgqj23nea83r5"]
+
+[node name="StifnessProperty" type="HBoxContainer"]
+offset_right = 79.0
+offset_bottom = 23.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Stiffness"
+
+[node name="HSlider" type="HSlider" parent="."]
+layout_mode = 2
+size_flags_horizontal = 10
+max_value = 1.0
+step = 0.0

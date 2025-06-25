@@ -11,12 +11,12 @@ config_version=5
 [application]
 
 config/name="SharpestAddon"
+run/main_scene="uid://c20il7n8envsi"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-DebugOverLay="*res://addons/SharpestAddon/Autoloads/DebugOverlay/debug_overlay.tscn"
 LaunchManager="*res://addons/SharpestAddon/src/autoloads/LaunchManager.cs"
 Draw3D="*res://addons/SharpestAddon/src/autoloads/Draw3D.cs"
 WindowManager="*res://addons/SharpestAddon/src/autoloads/WindowManager.cs"

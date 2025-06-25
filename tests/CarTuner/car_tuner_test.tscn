@@ -104,7 +104,3 @@ mesh = SubResource("PlaneMesh_g7bic")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-0.625926, -0.509076, 0.590812, 0, 0.757566, 0.652759, -0.779883, 0.408579, -0.47418, 5.88595, 6.50309, -4.724)
-
-[node name="HSlider" type="HSlider" parent="."]
-offset_right = 8.0
-offset_bottom = 16.0

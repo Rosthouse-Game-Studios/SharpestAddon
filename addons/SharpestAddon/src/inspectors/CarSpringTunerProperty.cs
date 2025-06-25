@@ -1,59 +1,41 @@
 
-using System;
 using Godot;
-using Godot.Collections;
+using rosthouse.sharpest.addon;
 
-public partial class CarSpringTunerProperty : EditorProperty
+public partial class CarSpringStiffnessTunerProperty : EditorProperty
 {
-  private HSlider stiffnessSlider;
-  private HSlider dampingSlider;
+  private EditorSpinSlider stiffnessSlider;
 
-  public CarSpringTunerProperty() : base()
+  public CarSpringStiffnessTunerProperty() : base()
   {
-    stiffnessSlider = new HSlider()
+    stiffnessSlider = new EditorSpinSlider()
     {
       MinValue = 0,
-      MaxValue = 1f
-    };
-    dampingSlider = new HSlider
-    {
-      MinValue = 0,
-      MaxValue = 1f
+      MaxValue = 1f,
+      Step = 0
     };
 
-    Label = "Spring";
-    UseFolding = true;
 
-    // // stiffnessSlider.ValueChanged += OnStiffnessChanged;
-    // // dampingSlider.ValueChanged += OnDampingChanged;
+    Label = "Stiffness";
+    stiffnessSlider.ValueChanged += OnStiffnessChanged;
 
-    // AddChild(AddRow("Stiffness", stiffnessSlider));
-    // AddChild(AddRow("Damping", dampingSlider));
+    AddChild(stiffnessSlider);
   }
 
-  public override Array<Dictionary> _GetPropertyList()
-  {
-    Dict dict =  [("Stiffness", stiffnessSlider), ("Damping", dampingSlider)];
-
+  public override void _ExitTree(){
+    stiffnessSlider.ValueChanged -= OnStiffnessChanged;
   }
-
-
-  private static Control AddRow(string label, HSlider stiffnessSlider)
+  public override void _UpdateProperty()
   {
-    var vBox = new VBoxContainer();
-    var stiffnessBox = new HBoxContainer();
-    stiffnessBox.AddChild(new Label { Text = label });
-    stiffnessBox.AddChild(stiffnessSlider);
-    return vBox;
-  }
-
-  private void OnDampingChanged(double value)
-  {
-    GD.Print($"Damping: {value}");
+    var editedObject = GetEditedObject();
+    editedObject.SetMeta("Stiffness", stiffnessSlider.Value);
+    EmitChanged("Stiffness", stiffnessSlider.Value);
   }
 
   private void OnStiffnessChanged(double value)
   {
-    GD.Print($"Stiffness {value}");
+    var editedObject = GetEditedObject();
+    editedObject.SetMeta("Stiffness", stiffnessSlider.Value);
+    EmitChanged("Stiffness", stiffnessSlider.Value);
   }
 }
