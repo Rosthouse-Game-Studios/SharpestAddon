@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Godot;
 
 namespace rosthouse.sharpest.addon;
@@ -5,7 +6,7 @@ namespace rosthouse.sharpest.addon;
 public static class GodotObjectExtensions
 {
 
-  public static bool TryGetMeta(this GodotObject r, StringName name, out Variant value)
+  public static bool TryGetMeta(this GodotObject r, StringName name, [NotNullWhen(true)] out Variant? value)
   {
     if (r.HasMeta(name))
     {
@@ -16,17 +17,18 @@ public static class GodotObjectExtensions
     return false;
   }
 
-  public static bool TryGetMeta<[MustBeVariant] T>(this GodotObject r, StringName name, out T value)
+  public static bool TryGetMeta<[MustBeVariant] T>(this GodotObject r, StringName name,[NotNullWhen(true)] out T? value)
   {
-    if (r.HasMeta(name))
+    if (r.HasMeta(name) )
     {
       value = r.GetMeta(name).As<T>();
-      return true;
+      if (value is not null)
+      {
+        return true;
+      }
     }
 
-#pragma warning disable CS8601 // Possible null reference assignment.
     value = default;
-#pragma warning restore CS8601 // Possible null reference assignment.
 
     return false;
   }
