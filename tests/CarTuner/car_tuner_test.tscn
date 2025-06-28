@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://dvdoyvjdsxygm"]
+[gd_scene load_steps=12 format=3 uid="uid://dvdoyvjdsxygm"]
 
+[ext_resource type="Script" uid="uid://v361iko58q3v" path="res://tests/CarTuner/simple_car.gd" id="1_sdrnw"]
 [ext_resource type="Material" uid="uid://c1ohopv6bl6ym" path="res://resources/materials/orange_01.tres" id="1_uf776"]
 [ext_resource type="Material" uid="uid://nko81qa6yacl" path="res://resources/materials/dark_12.tres" id="2_rsoos"]
 [ext_resource type="Material" uid="uid://b8kf2pnmgmyuf" path="res://resources/materials/light_08.tres" id="3_rsoos"]
@@ -39,8 +40,14 @@ shadow_enabled = true
 
 [node name="VehicleBody3D" type="VehicleBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.994696, 0)
-metadata/Frequency = 0.01
-metadata/Zeta = 2.0
+mass = 1500.0
+center_of_mass_mode = 1
+script = ExtResource("1_sdrnw")
+max_engine_force = 5000.0
+max_steering_angle = 45.0
+metadata/Frequency = 16.0
+metadata/Zeta = 1.5
+metadata/Travel = 0.2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
@@ -64,9 +71,9 @@ sides = 16
 
 [node name="BackLeft" type="VehicleWheel3D" parent="VehicleBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.1, -0.8)
-suspension_stiffness = 12.5331
-damping_compression = 44.7806
-damping_relaxation = 44.7806
+suspension_stiffness = 75798.6
+damping_compression = 2261.95
+damping_relaxation = 2261.95
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/BackLeft"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
@@ -75,9 +82,9 @@ mesh = SubResource("CylinderMesh_g7bic")
 
 [node name="BackRight" type="VehicleWheel3D" parent="VehicleBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, -0.1, -0.8)
-suspension_stiffness = 12.5331
-damping_compression = 44.7806
-damping_relaxation = 44.7806
+suspension_stiffness = 75798.6
+damping_compression = 2261.95
+damping_relaxation = 2261.95
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/BackRight"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
@@ -86,9 +93,11 @@ mesh = SubResource("CylinderMesh_g7bic")
 
 [node name="FrontLeft" type="VehicleWheel3D" parent="VehicleBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.1, 0.8)
-suspension_stiffness = 12.5331
-damping_compression = 44.7806
-damping_relaxation = 44.7806
+use_as_traction = true
+use_as_steering = true
+suspension_stiffness = 75798.6
+damping_compression = 2261.95
+damping_relaxation = 2261.95
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/FrontLeft"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
@@ -97,9 +106,11 @@ mesh = SubResource("CylinderMesh_g7bic")
 
 [node name="FrontRight" type="VehicleWheel3D" parent="VehicleBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, -0.1, 0.8)
-suspension_stiffness = 12.5331
-damping_compression = 44.7806
-damping_relaxation = 44.7806
+use_as_traction = true
+use_as_steering = true
+suspension_stiffness = 75798.6
+damping_compression = 2261.95
+damping_relaxation = 2261.95
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/FrontRight"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)

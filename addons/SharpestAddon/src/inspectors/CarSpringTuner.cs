@@ -7,6 +7,7 @@ public partial class CarSpringTuner : EditorInspectorPlugin
 {
   private const string PROPERTY_ZETA = "Zeta";
   private const string PROPERTY_FREQUENCY = "Frequency";
+  private const string PROPERTY_TRAVEL = "Travel";
 
   public override bool _CanHandle(GodotObject @object)
   {
@@ -32,6 +33,17 @@ public partial class CarSpringTuner : EditorInspectorPlugin
         MaxValue = 2,
         Label = "Zeta"
       };
+
+      EditorSpinSlider travel = new EditorSpinSlider
+      {
+        MinValue = 0,
+        Step = 0,
+        Label = "Travel",
+        Suffix = "m",
+        HideSlider = true,
+
+      };
+
       if (@object.TryGetMeta<float>(PROPERTY_FREQUENCY, out var frequencyValue))
       {
         frequency.SetValueNoSignal(frequencyValue);
@@ -42,12 +54,24 @@ public partial class CarSpringTuner : EditorInspectorPlugin
         zeta.SetValueNoSignal(zetaValue);
       }
 
+      if (@object.TryGetMeta<float>(PROPERTY_TRAVEL, out var travelValue))
+      {
+        travel.SetValueNoSignal(travelValue);
+      }
       frequency.ValueChanged += v => OnFrequencyChanged(vehicle, v);
       zeta.ValueChanged += v => OnZetaChanged(vehicle, v);
+      travel.ValueChanged += v => OnTravelChanged(vehicle, v);
 
       AddPropertyEditor(PROPERTY_FREQUENCY, frequency, label: "Frequency");
       AddPropertyEditor(PROPERTY_ZETA, zeta, label: "Zeta");
+      AddPropertyEditor(PROPERTY_TRAVEL, travel, label: "Travel");
     }
+  }
+
+  private void OnTravelChanged(VehicleBody3D vehicle, double v)
+  {
+    vehicle.SetMeta(PROPERTY_TRAVEL, v);
+    RecalculateSprings(vehicle);
   }
 
   private void OnZetaChanged(VehicleBody3D vehicle, double v)
@@ -56,19 +80,15 @@ public partial class CarSpringTuner : EditorInspectorPlugin
     RecalculateSprings(vehicle);
   }
 
-  private void OnFrequencyChanged(VehicleBody3D vehicleBody3D, double value)
+  private void OnFrequencyChanged(VehicleBody3D vehicle, double value)
   {
-    vehicleBody3D.SetMeta(PROPERTY_FREQUENCY, value);
-  }
-
-  private void RecalculateSprings()
-  {
-
+    vehicle.SetMeta(PROPERTY_FREQUENCY, value);
+    RecalculateSprings(vehicle);
   }
 
   private static float CalculateStiffness(float mass, float frequency)
   {
-    return mass * Mathf.Sqrt(frequency * 2 * Mathf.Pi);
+    return mass * Mathf.Pow(frequency * 2 * Mathf.Pi, 2);
   }
 
   private static float CalculateDamping(float stiffness, float mass, float zeta)
@@ -86,19 +106,26 @@ public partial class CarSpringTuner : EditorInspectorPlugin
     {
       zeta = 1;
     }
-
+    if (!vehicle.TryGetMeta(PROPERTY_TRAVEL, out float travel))
+    {
+      travel = 0.2f;
+    }
 
     var springs = vehicle.GetChildren<VehicleWheel3D>();
-    var relMass = vehicle.Mass / springs.Count;
+    // var relMass = vehicle.Mass;
 
-    var stiffness = CalculateStiffness(relMass, frequency);
-    var damping = CalculateDamping(stiffness, relMass, zeta);
+    GD.Print($"Mass {vehicle.Mass}, frequency {frequency}");
+    var stiffness = CalculateStiffness(vehicle.Mass, frequency);
+    var damping = CalculateDamping(stiffness, vehicle.Mass, zeta);
+    GD.Print($"Stiffness {stiffness}, damping {damping}");
 
     foreach (var spring in springs)
     {
-      spring.SuspensionStiffness = stiffness;
-      spring.DampingCompression = damping;
-      spring.DampingRelaxation = damping;
+      spring.SuspensionTravel = travel;
+      var travelFactor = spring.SuspensionTravel * 1000; // convert travel to mm
+      spring.SuspensionStiffness = stiffness / travelFactor;
+      spring.DampingCompression = damping / travelFactor;
+      spring.DampingRelaxation = damping / travelFactor;
     }
   }
 

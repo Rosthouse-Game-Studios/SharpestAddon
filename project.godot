@@ -35,3 +35,8 @@ enabled=PackedStringArray("res://addons/SharpestAddon/plugin.cfg")
 
 settings/test/test_lookup_folder="tests"
 settings/test/test_discovery=true
+
+[physics]
+
+3d/run_on_separate_thread=true
+3d/physics_engine="Jolt Physics"
