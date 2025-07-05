@@ -86,14 +86,14 @@ public partial class CarSpringTuner : EditorInspectorPlugin
     RecalculateSprings(vehicle);
   }
 
-  private static float CalculateStiffness(float mass, float frequency)
+  private static double CalculateStiffness(double mass, double frequency)
   {
-    return mass * Mathf.Pow(frequency * 2 * Mathf.Pi, 2);
+    return 4 * Mathf.Pow(frequency, 2) * mass * Mathf.Pow(Mathf.Pi, 2);
   }
 
-  private static float CalculateDamping(float stiffness, float mass, float zeta)
+  private static double CalculateDamping(double stiffness, double mass, double zeta)
   {
-    return zeta * 2 * mass * Mathf.Sqrt(stiffness / mass);
+    return zeta * 2 * Mathf.Sqrt(mass * stiffness);
   }
 
   private void RecalculateSprings(VehicleBody3D vehicle)
@@ -122,10 +122,9 @@ public partial class CarSpringTuner : EditorInspectorPlugin
     foreach (var spring in springs)
     {
       spring.SuspensionTravel = travel;
-      var travelFactor = spring.SuspensionTravel * 1000; // convert travel to mm
-      spring.SuspensionStiffness = stiffness / travelFactor;
-      spring.DampingCompression = damping / travelFactor;
-      spring.DampingRelaxation = damping / travelFactor;
+      spring.SuspensionStiffness = (float)(stiffness / travel) / 1_000_000;
+      spring.DampingCompression = (float)(damping / travel) / 1_000_000;
+      spring.DampingRelaxation = (float)(damping / travel) / 1_000_000;
     }
   }
 
