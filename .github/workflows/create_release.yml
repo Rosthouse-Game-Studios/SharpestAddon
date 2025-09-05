@@ -6,18 +6,15 @@ on:
       - "*"
   workflow_dispatch:  # <--- This allows manual triggering
 
+env:
+  ZIP_NAME: sharpestaddon_${{ github.ref_name }}.zip
+
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Set up variables
-        id: vars
-        run: |
-          ZIP_NAME="sharpestaddon_${{ github.ref_name }}.zip"
-          echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV
 
       - name: Zip subdirectory
         run: |
