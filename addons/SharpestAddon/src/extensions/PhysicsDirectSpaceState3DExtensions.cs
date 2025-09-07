@@ -75,6 +75,33 @@ public static class PhysicsDirectSpaceState3DExtensions
   }
 
   /// <summary>
+  /// Cast a ray from the camera, using the mouse as a focal point.
+  /// </summary>
+  /// <param name="dss">A Physics State, through which collisions are determined</param>
+  /// <param name="collisionMask">Masking out certain parts of the world is done by giving a collision mask.</param>
+  /// <param name="exclude">Alternatively to collisionMask, we can directly exclude certain RIDs.</param>
+  /// <param name="rayLength">Given in meters, how far the ray should extend.</param>
+  /// <param name="collideWithAreas">Areas are only hit, if this parameter is set to true.</param>
+  /// <returns>A <see href="Nullable" /> containing either null or a <see href="PhysicsRayQueryResult3D" />.</returns>
+  public static PhysicsRayQueryResult3D? CastRayFromWorld(this PhysicsDirectSpaceState3D dss, Vector3 worldPosition, Vector3 direction, uint collisionMask = uint.MaxValue, Array<Rid>? exclude = null, float rayLength = 1000, bool collideWithAreas = false)
+  {
+    var st = (SceneTree)Engine.GetMainLoop();
+    var vp = st.CurrentScene.GetViewport();
+
+    PhysicsRayQueryParameters3D query = new PhysicsRayQueryParameters3D
+    {
+      From = worldPosition,
+      To = worldPosition + direction * rayLength,
+      CollisionMask = collisionMask,
+      Exclude = exclude,
+      CollideWithAreas = collideWithAreas
+    };
+
+    var result = dss.IntersectRayResult(query);
+    return result;
+  }
+
+  /// <summary>
   /// Cast a ray from the camera, from any point on the viewport
   /// </summary>
   /// <param name="dss">A Physics State, through which collisions are determined</param>
@@ -101,7 +128,7 @@ public static class PhysicsDirectSpaceState3DExtensions
     var result = dss.IntersectRayResult(query);
     return result;
   }
-  
+
   // <summary>
   /// Cast a ray from the camera, from any point on the viewport
   /// </summary>
