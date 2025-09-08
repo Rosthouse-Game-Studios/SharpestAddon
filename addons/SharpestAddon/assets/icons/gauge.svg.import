@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://q3ewxrrrh8x"
-path="res://.godot/imported/texture_06.png-91633275f084b70607a5fce42744ce4a.ctex"
+uid="uid://dkhc8iwr8p6we"
+path="res://.godot/imported/gauge.svg-68eaad8f2b794036aa6ab15c15a0870f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/Dark/texture_06.png"
-dest_files=["res://.godot/imported/texture_06.png-91633275f084b70607a5fce42744ce4a.ctex"]
+source_file="res://addons/SharpestAddon/assets/icons/gauge.svg"
+dest_files=["res://.godot/imported/gauge.svg-68eaad8f2b794036aa6ab15c15a0870f.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false
