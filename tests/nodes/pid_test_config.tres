@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PIDConfig" load_steps=2 format=3 uid="uid://crs17h68t7pgs"]
+
+[ext_resource type="Script" uid="uid://b1ehu40nifmus" path="res://addons/SharpestAddon/src/nodes/PIDConfig.cs" id="1_etx5o"]
+
+[resource]
+script = ExtResource("1_etx5o")
+Proportional = 8.0
+Integral = 5.0
+Derivative = 2.0
+metadata/_custom_type_script = "uid://b1ehu40nifmus"

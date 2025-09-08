@@ -14,7 +14,7 @@ public static class ColorExtensions
   private static readonly float DEG_210 = 210.0f / 360.0f;
   private static readonly float DEG_240 = 240.0f / 360.0f;
   private static readonly float DEG_270 = 270.0f / 360.0f;
-  private static readonly float DEG_360 = 1f;
+  private static readonly float DEG_360 = 1.0f;
 
   /// <summary>
   /// Converts a color to a corresponding grayscale value. Note that only the RGB values are used for the conversion, the Alpha value is ignored.
@@ -118,7 +118,7 @@ public static class ColorExtensions
 
   private static float AddAngle(float v, float val)
   {
-    return (v + val) % 1.0f;
+    return (v + val) % DEG_360;
   }
 }
 
