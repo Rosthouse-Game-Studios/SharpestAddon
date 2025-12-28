@@ -17,9 +17,9 @@ public static class GodotObjectExtensions
     return false;
   }
 
-  public static bool TryGetMeta<[MustBeVariant] T>(this GodotObject r, StringName name,[NotNullWhen(true)] out T? value)
+  public static bool TryGetMeta<[MustBeVariant] T>(this GodotObject r, StringName name, [NotNullWhen(true)] out T value)
   {
-    if (r.HasMeta(name) )
+    if (r.HasMeta(name))
     {
       value = r.GetMeta(name).As<T>();
       if (value is not null)
