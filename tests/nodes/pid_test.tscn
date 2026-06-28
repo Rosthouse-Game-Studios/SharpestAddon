@@ -1,0 +1,148 @@
+[gd_scene load_steps=18 format=3 uid="uid://ddo6bwq1h6ren"]
+
+[ext_resource type="Script" uid="uid://bcmsu2rsj2k0j" path="res://tests/nodes/PidTest.cs" id="1_gway7"]
+[ext_resource type="Script" uid="uid://bfin4dqcwrehj" path="res://addons/SharpestAddon/src/nodes/PIDController.cs" id="2_oup0e"]
+[ext_resource type="Resource" uid="uid://crs17h68t7pgs" path="res://tests/nodes/pid_test_config.tres" id="3_0hgt0"]
+[ext_resource type="Material" uid="uid://c1ohopv6bl6ym" path="res://resources/materials/orange_01.tres" id="4_bl4qj"]
+[ext_resource type="Material" uid="uid://nko81qa6yacl" path="res://resources/materials/dark_12.tres" id="5_75m81"]
+[ext_resource type="Script" uid="uid://beoktt08xwkrd" path="res://tests/nodes/PIDConfigUI.cs" id="6_rx030"]
+[ext_resource type="Texture2D" uid="uid://dg4fhvxxvx3pl" path="res://assets/textures/Green/texture_13.png" id="7_rx030"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0hgt0"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_rx030"]
+sky_material = SubResource("ProceduralSkyMaterial_0hgt0")
+
+[sub_resource type="Environment" id="Environment_gttwh"]
+background_mode = 2
+sky = SubResource("Sky_rx030")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bl4qj"]
+friction = 0.3
+bounce = 0.4
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_75m81"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_0hgt0"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rx030"]
+friction = 0.8
+bounce = 0.1
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_0hgt0"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_rx030"]
+size = Vector2(20, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gttwh"]
+albedo_texture = ExtResource("7_rx030")
+uv1_triplanar = true
+
+[node name="PIDTest" type="Node3D"]
+script = ExtResource("1_gway7")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_gttwh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="PIDController" type="Node" parent="."]
+script = ExtResource("2_oup0e")
+Config = ExtResource("3_0hgt0")
+Target = 3.0
+metadata/_custom_type_script = "uid://bfin4dqcwrehj"
+
+[node name="Ball" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.927172, 0)
+physics_material_override = SubResource("PhysicsMaterial_bl4qj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball"]
+shape = SubResource("SphereShape3D_75m81")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball"]
+material_override = ExtResource("4_bl4qj")
+mesh = SubResource("SphereMesh_0hgt0")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_rx030")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_0hgt0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+material_override = ExtResource("5_75m81")
+mesh = SubResource("PlaneMesh_rx030")
+
+[node name="GridContainer" type="GridContainer" parent="." node_paths=PackedStringArray("Controller")]
+offset_left = 36.0
+offset_top = 36.0
+offset_right = 387.0
+offset_bottom = 323.0
+columns = 2
+script = ExtResource("6_rx030")
+Config = ExtResource("3_0hgt0")
+Controller = NodePath("../PIDController")
+
+[node name="Label" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Set Point (Height)"
+
+[node name="SetPointSlider" type="HSlider" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 10.0
+step = 0.1
+value = 1.0
+tick_count = 10
+
+[node name="Label3" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Proportional"
+
+[node name="ProportionalSlider" type="HSlider" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 0.1
+value = 1.0
+tick_count = 10
+
+[node name="Label2" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Integral"
+
+[node name="IntegralSlider" type="HSlider" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 0.1
+value = 1.0
+tick_count = 10
+
+[node name="Label4" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Derivative"
+
+[node name="DerivativeSlider" type="HSlider" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 0.1
+value = 1.0
+tick_count = 10
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.79708, -0.261381, 0.544375, 0, 0.901471, 0.43284, -0.603874, -0.345008, 0.718544, 7.30476, 11.5623, 10.0284)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5, 0)
+material_override = SubResource("StandardMaterial3D_gttwh")
+size = Vector3(1, 10, 1)

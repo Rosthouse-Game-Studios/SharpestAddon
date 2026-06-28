@@ -10,7 +10,8 @@ using rosthouse.sharpest.addon.nodes1;
 namespace rosthouse.sharpest.addon;
 
 [Tool]
-public partial class SharpestAddon : EditorPlugin {
+public partial class SharpestAddon : EditorPlugin
+{
   private List<EditorInspectorPlugin> inspectorPlugins = new();
   public override void _EnterTree()
   {
@@ -47,6 +48,7 @@ public partial class SharpestAddon : EditorPlugin {
     AddCustomType(nameof(ExtendedRemoteTransform3D), "Node3D", GD.Load<Script>("res://addons/SharpestAddon/src/nodes/ExtendedRemoteTransform3D.cs"), GD.Load<Texture2D>("res://addons/SharpestAddon/assets/icons/ExtendedRemoteTransform3D.svg"));
     AddCustomType(nameof(DebugOverlay), "CanvasLayer", GD.Load<Script>("res://addons/SharpestAddon/src/autoloads/DebugOverlay.cs"), GD.Load<Texture2D>("res://addons/SharpestAddon/assets/icons/debug_overlay_icon.png"));
     AddCustomType(nameof(CsgStairs3D), "CSGBox3D", GD.Load<Script>("res://addons/SharpestAddon/src/nodes/CsgStairs3D.cs"), GD.Load<Texture2D>("res://addons/SharpestAddon/assets/icons/CsgStairs3D.svg"));
+    AddCustomType(nameof(PIDController), "PIDController", GD.Load<Script>("res://addons/SharpestAddon/src/nodes/PIDController.cs"), GD.Load<Texture2D>("res://addons/SharpestAddon/assets/icons/gauge.svg"));
   }
 
   public override void _ExitTree()
@@ -64,6 +66,7 @@ public partial class SharpestAddon : EditorPlugin {
     RemoveCustomType(nameof(ExtendedRemoteTransform3D));
     RemoveCustomType(nameof(DebugOverlay));
     RemoveCustomType(nameof(CsgStairs3D));
+    RemoveCustomType(nameof(PIDController));
   }
 
   private void RemoveSingletons()

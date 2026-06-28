@@ -40,8 +40,7 @@ public partial class CarSpringTuner : EditorInspectorPlugin
         Step = 0,
         Label = "Travel",
         Suffix = "m",
-        HideSlider = true,
-
+        ControlState = EditorSpinSlider.ControlStateEnum.Hide,
       };
 
       if (@object.TryGetMeta<float>(PROPERTY_FREQUENCY, out var frequencyValue))
