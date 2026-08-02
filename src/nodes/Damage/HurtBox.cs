@@ -5,6 +5,7 @@ using rosthouse.sharpest.addon.utils;
 namespace rosthouse.sharpest.addon.nodes;
 
 [GlobalClass]
+[Icon("res://addons/SharpestAddon/assets/icons/HurtBox2D.svg")]
 public partial class HurtBox : Area2D
 {
 
@@ -12,7 +13,7 @@ public partial class HurtBox : Area2D
     public delegate void DamageReceivedEventHandler(Damage damage);
 
     [Export]
-    public Array<AbstractDamageFilter> DamageFilters { get; private set; }
+    public Array<AbstractDamageFilter> DamageFilters { get; private set; } = [];
 
     public bool DealDamage(Damage damage)
     {
