@@ -3,7 +3,6 @@ using Godot;
 using rosthouse.sharpest.addon.autoloads;
 using rosthouse.sharpest.addon.autoloads.debug;
 using rosthouse.sharpest.addon.nodes;
-using rosthouse.sharpest.addon.nodes1;
 
 #if TOOLS
 
