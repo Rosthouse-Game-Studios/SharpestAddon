@@ -1,6 +1,6 @@
 using Godot;
 
-namespace rosthouse.sharpest.addon.nodes1;
+namespace rosthouse.sharpest.addon.nodes;
 
 public partial class Quit : Node
 {

@@ -1,7 +1,5 @@
 using Godot;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using rosthouse.sharpest.addon;
-using System;
 
 public partial class CarSpringTuner : EditorInspectorPlugin
 {
