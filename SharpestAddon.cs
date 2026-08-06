@@ -14,9 +14,18 @@ public partial class SharpestAddon : EditorPlugin
   private List<EditorInspectorPlugin> inspectorPlugins = new();
   public override void _EnterTree()
   {
+    InitializeSettings();
     AddCustomTypes();
     AddInspectorPlugins();
     RegisterSingletons();
+  }
+
+  private void InitializeSettings()
+  {
+    if (!ProjectSettings.HasSetting(Constants.Settings.TileSizeSetting))
+    {
+      ProjectSettings.SetSetting(Constants.Settings.TileSizeSetting, 16);
+    }
   }
 
   private void AddInspectorPlugins()
