@@ -4,14 +4,14 @@ using Godot;
 namespace rosthouse.sharpest.addon.inspectors;
 
 [Tool]
-public partial class TilePropertyEditor : EditorProperty
+public partial class TileSizeRelativeEditorProperty : EditorProperty
 {
     // The main control for editing the property.
     private EditorSpinSlider _propertyControl = new EditorSpinSlider();
     private double TileSize =>
         ProjectSettings.GetSetting(Constants.Settings.TileSizeSetting, 16).AsDouble();
 
-    public TilePropertyEditor()
+    public TileSizeRelativeEditorProperty()
     {
         // Add the control as a direct child of EditorProperty node.
         _propertyControl.MaxValue = double.MaxValue;
