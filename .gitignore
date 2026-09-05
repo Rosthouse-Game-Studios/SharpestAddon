@@ -22,4 +22,6 @@ addons/*
 !addons/SharpestAddon
 .idea/
 
+assets/**/*.import
+
 TestResults/
