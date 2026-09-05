@@ -18,7 +18,8 @@ public static class VectorExtensions
     return (int)v.Y;
   }
 
-  public static Vector3 Set(this Vector3 v, Vector3.Axis axis, float value ){
+  public static Vector3 Set(this Vector3 v, Vector3.Axis axis, float value)
+  {
     v[(int)axis] = value;
     return v;
   }
@@ -38,6 +39,32 @@ public static class VectorExtensions
       default:
         throw new Exception($"Expected value between 0 and 3, got {x}");
     }
+  }
+
+  /// <summary>
+  /// Smoothly moves this vector toward <paramref name="target"/> using frame-rate independent exponential decay.
+  /// Applies the formula <c>Lerp(current, target, 1 - decayBase^rate)</c>. The default <paramref name="decayBase"/>
+  /// of 0.5 gives a "half-life" property: after one unit of accumulated rate the distance to the target is halved.
+  /// Values closer to 0 decay faster; values closer to 1 decay slower. Because the weight is derived from an
+  /// exponential function of time, the result depends only on total elapsed time and not on how many frames it
+  /// was divided into — unlike a plain Lerp with a constant weight.
+  /// The caller is responsible for pre-multiplying <paramref name="rate"/> by delta time before passing it in.
+  /// </summary>
+  /// <param name="current">The current vector value.</param>
+  /// <param name="target">The target vector to move toward.</param>
+  /// <param name="rate">Decay rate, already multiplied by delta time. Higher values converge faster.</param>
+  /// <param name="decayBase">Base of the exponential. Defaults to 0.5 (half-life semantics). Must be in (0, 1).</param>
+  /// <returns>The damped vector, closer to <paramref name="target"/>.</returns>
+  /// <seealso href="https://www.rorydriscoll.com/2016/03/07/frame-rate-independent-damping-using-lerp/"/>
+  public static Vector2 Damp(this Vector2 current, Vector2 target, float rate, float decayBase = 0.5f)
+  {
+    return current.Lerp(target, 1f - Mathf.Pow(decayBase, rate));
+  }
+
+  /// <inheritdoc cref="Damp(Vector2, Vector2, float, float)"/>
+  public static Vector3 Damp(this Vector3 current, Vector3 target, float rate, float decayBase = 0.5f)
+  {
+    return current.Lerp(target, 1f - Mathf.Pow(decayBase, rate));
   }
 
   public static Vector2I RountToInt(this Vector2 v)
