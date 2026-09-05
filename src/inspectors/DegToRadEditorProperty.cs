@@ -7,11 +7,10 @@ namespace rosthouse.sharpest.addon.inspectors;
 public partial class DegToRadEditorProperty : EditorProperty
 {
   // The main control for editing the property.
-  private EditorSpinSlider _propertyControl = new EditorSpinSlider();
+  private EditorSpinSlider _propertyControl = new();
 
   public DegToRadEditorProperty()
   {
-    // Add the control as a direct child of EditorProperty node.
     _propertyControl.Suffix = "º";
     _propertyControl.MaxValue = double.MaxValue;
     _propertyControl.MinValue = 0;
