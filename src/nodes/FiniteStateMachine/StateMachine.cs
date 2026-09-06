@@ -1,5 +1,5 @@
 using Godot;
-using rosthouse.sharpest.addon.utils;
+using Godot.Collections;
 
 
 namespace rosthouse.sharpest.addon.nodes.finitestatemachine;
@@ -10,12 +10,15 @@ public partial class StateMachine : Node
   [Export]
   public State InitialState { get; private set; } = null!;
   public State CurrentState { get; private set; } = null!;
+  public Array<State> States { get; private set; } = null!;
+
+  [Signal]
+  public delegate void SwitchingStateEventHandler(State previousState, State nextState);
 
   public override async void _Ready()
   {
-    base._Ready();
-
-    foreach (var state in this.GetChildren<State>())
+    States = this.GetChildren<State>();
+    foreach (var state in States)
     {
       state.Finished += TransitionNext;
     }
@@ -28,27 +31,25 @@ public partial class StateMachine : Node
   private void TransitionNext(NodePath nextStatePath)
   {
     var nextState = GetNode<State>(nextStatePath);
-    DebugUtils.PrintDebug($"[{Owner.Name}] Switching from state {CurrentState.Name} to {nextState.Name}");
-    CurrentState.Exit();
-    nextState.Enter(CurrentState.GetPath());
+    EmitSignal(SignalName.SwitchingState, CurrentState, nextState);
+    GD.Print($"[{Owner.Name}] Switching from state {CurrentState.Name} to {nextState.Name}");
+    CurrentState?.Exit();
+    nextState.Enter(CurrentState);
     CurrentState = nextState;
   }
 
   public override void _UnhandledInput(InputEvent @event)
   {
-    base._UnhandledInput(@event);
-    CurrentState.HandleInput(@event);
+    CurrentState?.HandleInput(@event);
   }
 
   public override void _Process(double delta)
   {
-    base._Process(delta);
-    CurrentState.Update(delta);
+    CurrentState?.Update((float)delta);
   }
 
   public override void _PhysicsProcess(double delta)
   {
-    base._PhysicsProcess(delta);
-    CurrentState.PhysicsUpdate(delta);
+    CurrentState?.PhysicsUpdate((float)delta);
   }
 }
