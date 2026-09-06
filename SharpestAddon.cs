@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using Godot;
+using Godot.NativeInterop;
 using rosthouse.sharpest.addon.autoloads;
 using rosthouse.sharpest.addon.autoloads.debug;
 using rosthouse.sharpest.addon.nodes;
+using rosthouse.sharpest.addon.utils;
 
 #if TOOLS
 
@@ -25,6 +27,12 @@ public partial class SharpestAddon : EditorPlugin
     if (!ProjectSettings.HasSetting(Constants.Settings.TileSizeSetting))
     {
       ProjectSettings.SetSetting(Constants.Settings.TileSizeSetting, 16);
+    }
+
+    if (!ProjectSettings.HasSetting(Constants.Settings.LoggingLevel))
+    {
+      var loggingLevel = VariantUtils.CreateFrom(LoggingLevel.Info);
+      ProjectSettings.SetSetting(Constants.Settings.LoggingLevel, loggingLevel.Int);
     }
   }
 

@@ -77,19 +77,37 @@ public static class VectorExtensions
     return new()
     {
       X = v.X,
-      Y = v.Y
+      Y = v.Y,
     };
   }
 
+  public static System.Numerics.Vector3 ToNumerics(this Vector3 v)
+  {
+    return new()
+    {
+      X = v.X,
+      Y = v.Y,
+      Z = v.Z,
+    };
+  }
   public static Vector2 ToGodot(this System.Numerics.Vector2 v)
   {
     return new()
     {
       X = v.X,
-      Y = v.Y
+      Y = v.Y,
     };
   }
 
+  public static Vector3 ToGodot(this System.Numerics.Vector3 v)
+  {
+    return new()
+    {
+      X = v.X,
+      Y = v.Y,
+      Z = v.Z,
+    };
+  }
   public static Vector3I RoundToInt(this Vector3 v)
   {
     return new Vector3I(
