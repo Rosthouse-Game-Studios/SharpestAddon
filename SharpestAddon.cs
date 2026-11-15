@@ -5,6 +5,7 @@ using rosthouse.sharpest.addon.autoloads;
 using rosthouse.sharpest.addon.autoloads.debug;
 using rosthouse.sharpest.addon.nodes;
 using rosthouse.sharpest.addon.utils;
+using rosthouse.sharpest.addon.gizmos;
 
 #if TOOLS
 
@@ -14,11 +15,13 @@ namespace rosthouse.sharpest.addon;
 public partial class SharpestAddon : EditorPlugin
 {
   private List<EditorInspectorPlugin> inspectorPlugins = new();
+  private List<EditorNode3DGizmoPlugin> gizmoPlugins = new();
   public override void _EnterTree()
   {
     InitializeSettings();
     AddCustomTypes();
     AddInspectorPlugins();
+    RegisterGizmos();
     RegisterSingletons();
   }
 
@@ -47,6 +50,15 @@ public partial class SharpestAddon : EditorPlugin
     }
   }
 
+  private void RegisterGizmos()
+  {
+    gizmoPlugins.Add(new RigidBody3DGizmo());
+
+    foreach (var gizmo in gizmoPlugins)
+    {
+      AddNode3DGizmoPlugin(gizmo);
+    }
+  }
   private void RegisterSingletons()
   {
     AddAutoloadSingleton(nameof(Draw3D), "res://addons/SharpestAddon/src/autoloads/Draw3D.cs");
@@ -71,6 +83,7 @@ public partial class SharpestAddon : EditorPlugin
   {
     RemoveSingletons();
     RemoveInspectorPlugins();
+    RemoveGizmos();
     RemoveCustomTypes();
   }
 
@@ -101,6 +114,16 @@ public partial class SharpestAddon : EditorPlugin
     }
 
     inspectorPlugins.Clear();
+  }
+
+  private void RemoveGizmos()
+  {
+    foreach (var gizmoPlugin in gizmoPlugins)
+    {
+      RemoveNode3DGizmoPlugin(gizmoPlugin);
+    }
+
+    gizmoPlugins.Clear();
   }
 }
 
