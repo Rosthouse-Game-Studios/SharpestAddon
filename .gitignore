@@ -1,5 +1,6 @@
 # Godot 4+ specific ignores
 .godot/
+*.import
 
 # Godot-specific ignores
 .import/
@@ -22,6 +23,5 @@ addons/*
 !addons/SharpestAddon
 .idea/
 
-assets/**/*.import
 
 TestResults/
