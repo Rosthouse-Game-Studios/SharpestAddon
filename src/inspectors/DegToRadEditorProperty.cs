@@ -6,12 +6,15 @@ namespace rosthouse.sharpest.addon.inspectors;
 [Tool]
 public partial class DegToRadEditorProperty : EditorProperty
 {
+  public static readonly string Prefix = "degtorad";
   // The main control for editing the property.
   private EditorSpinSlider _propertyControl = new();
 
   public DegToRadEditorProperty()
+    : this("º") { }
+  public DegToRadEditorProperty(string? suffix)
   {
-    _propertyControl.Suffix = "º";
+    _propertyControl.Suffix = suffix;
     _propertyControl.MaxValue = double.MaxValue;
     _propertyControl.MinValue = 0;
     _propertyControl.ControlState = EditorSpinSlider.ControlStateEnum.Hide;
